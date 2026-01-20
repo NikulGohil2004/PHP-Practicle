@@ -22,6 +22,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
   
     $filename = $_FILES['uploadfile']['name'];
+    
 
     if (!empty($filename)) {
         $target_dir = "upload/";
@@ -34,8 +35,19 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     }
      
     //validation
-    
-    echo "working";
+    //validation
+     if(empty($_POST['firstName'])  || empty($_POST['lastName']) || empty($_POST['email']) )
+       {  
+         echo "<h1>FirstName,LastName,email fields are compulsory</h1>";
+         
+       }
+       elseif(empty($_POST['password']))
+       {
+         echo "password is mandatory";
+       }elseif (strlen($_POST['password']) < 6) {
+         echo "password must be 6 character";
+       }else{
+
 
     $sql = "UPDATE student SET 
         firstName='$firstName',
@@ -49,10 +61,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         hobby='$hobby',
         filenam='$filename'
         WHERE id='$id'";
+       }
 
     if (mysqli_query($con, $sql)) {
-        header("Location: Display.php");
-        exit();
+        header("Location: Dasboard.php");
+        
     } else {
         echo "Error: " . mysqli_error($con);
     }
@@ -93,14 +106,14 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                         <div class="col-md-6 ">
                             <label for="validationCustom01" class="form-label">First name</label>
                             <input type="text" name="firstName" class="form-control"
-                                value="<?php echo $row['firstName']; ?>"  required />
+                                value="<?php echo $row['firstName']; ?>" required />
                         </div>
                         <!--end::Col-->
                         <!--begin::Col-->
                         <div class="col-md-6">
                             <label for="validationCustom02" class="form-label">Last name</label>
                             <input type="text" name="lastName" class="form-control"
-                                value="<?php echo $row['lastName']; ?>"  required />
+                                value="<?php echo $row['lastName']; ?>" required />
 
                         </div>
                         <!--end::Col-->
@@ -110,8 +123,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                             <div class="input-group has-validation">
 
                                 <input type="email" name="email" class="form-control"
-                                    value="<?php echo $row['email']; ?>" 
-                                    aria-describedby="inputGroupPrepend" required />
+                                    value="<?php echo $row['email']; ?>" aria-describedby="inputGroupPrepend"
+                                    required />
                             </div>
                         </div>
                         <!--end::Col-->
@@ -127,16 +140,14 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                         <!--begin::Col-->
                         <div class="col-md-6">
                             <label for="validationCustom03" class="form-label">Address</label>
-                            <input type="text" class="form-control" name="addres"
-                                value="<?php echo $row['addres']; ?>" required/>
+                            <input type="text" class="form-control" name="addres" required />
 
                         </div>
                         <!--end::Col-->
                         <!--begin::Col-->
                         <div class="col-md-6">
                             <label for="validationCustom03" class="form-label">Phone-Number</label>
-                            <input type="number" name="phoneNumber" value="<?php echo $row['phoneNumber']; ?>"
-                                class="form-control"  required />
+                            <input type="number" name="phoneNumber" class="form-control" required />
 
                         </div>
                         <!--end::Col-->
@@ -145,35 +156,31 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                                 Gender
                             </label>
                             <div class="form-check">
-                                <input class="form-check-input" type="radio" name="gender" value="male"
-                                    <?php if($row['gender']=="male") echo "checked"; ?> >
+                                <input class="form-check-input" type="radio" name="gender" value="male">
                                 <label class="form-check-label" for="radioDefault1">
                                     Male
                                 </label>
                             </div>
                             <div class="form-check">
-                                <input class="form-check-input" type="radio" name="gender" value="Female"
-                                    <?php if($row['gender']=="Female") echo "checked"; ?> >
+                                <input class="form-check-input" type="radio" name="gender" value="Female">
                                 <label class="form-check-label " for="radioDefault2">
                                     Female
                                 </label>
                             </div>
                         </div>
                         <div class="col-md-4">
-                            <?php $hobbies = explode(", ", $row['hobby']); ?>
+
                             <label class="form-check-label" for="radioDefault1">
                                 Hobby
                             </label>
                             <div class="form-check">
-                                <input class="form-check-input" type="checkbox" name="hobby[]" value="Carrom"
-                                    <?php if(in_array("Carrom",$hobbies)) echo "checked"; ?> >
+                                <input class="form-check-input" type="checkbox" name="hobby[]" value="Carrom">
                                 <label class="form-check-label" for="checkDefault">
                                     Carrom
                                 </label>
                             </div>
                             <div class="form-check">
-                                <input class="form-check-input" type="checkbox" name="hobby[]" value="Chess"
-                                    <?php if(in_array("Chess",$hobbies)) echo "checked"; ?> >
+                                <input class="form-check-input" type="checkbox" name="hobby[]" value="Chess">
                                 <label class="form-check-label" for="checkChecked">
                                     Chess
                                 </label>
@@ -182,28 +189,28 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
                         <div class="col-md-4">
                             <label for="validationCustom04" class="form-label">Country</label>
-                            <select class="form-select"  name="country" required>
-                                <option value="India" <?php if($row['country']=="India") echo "selected"; ?>>INDIA
+                            <select class="form-select" name="country" required>
+                                <option value="India">INDIA
                                 </option>
-                                <option value="USA" <?php if($row['country']=="USA") echo "selected"; ?>>USA</option>
+                                <option value="USA">USA</option>
                             </select>
                         </div>
 
                         <div class="col-md-6 ">
                             <div class="input-group mb-3">
-                                <input type="file" class="form-control" name="uploadfile" value=""
-                                     required />
+                                <input type="file" class="form-control" name="uploadfile" value="" required />
                             </div>
-                            <div class="cold-md-6">
-                                <img src="upload/<?php echo $row['filenam']; ?>" width="100"><br>
-                            </div>
+
                         </div>
 
                         <!--begin::Footer-->
 
                         <div class="card-footer text-center">
-
-                            <input class="btn btn-info" name="submit" value="Update" type="submit" />
+                            <input class="btn btn-info" name="submit" value="Update" type="submit" /><br>
+                              <button class='btn btn-info'><a href="Dasboard.php">Display Page</a></button>
+                        </div>
+                        <div>
+                          
                         </div>
                         <!--end::Footer-->
             </form>

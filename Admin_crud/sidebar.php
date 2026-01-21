@@ -54,6 +54,32 @@
                   </li>
                 </ul>
               </li>
+
+               <li class="nav-item menu-open">
+                <a href="#" class="nav-link active">
+                  <i class="nav-icon bi bi-speedometer"></i>
+                  <p>
+                    MVC-CRUD
+                    <i class="nav-arrow bi bi-chevron-right"></i>
+                  </p>
+                </a>
+                <ul class="nav nav-treeview">
+                  <li class="nav-item">
+                    <a href="../CRUd_Admin/Insert.html" class="nav-link">
+                      <i class="nav-icon bi bi-circle"></i>
+                      <p>REGISTER</p>
+                    </a>
+                  </li>
+                  
+                  <li class="nav-item">
+                    <a href="Login.php" class="nav-link active">
+                      <i class="nav-icon bi bi-circle"></i>
+                      <p>Login</p>
+                    </a>
+                  </li>
+                </ul>
+              </li>
+           
            
             </ul>
             <!--end::Sidebar Menu-->

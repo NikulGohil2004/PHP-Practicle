@@ -1,6 +1,3 @@
-
-
-
 <!doctype html>
 <html lang="en">
 <!--begin::Head-->
@@ -195,7 +192,7 @@
                         <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">
                             <img src="./assets/img/user2-160x160.jpg" class="user-image rounded-circle shadow"
                                 alt="User Image" />
-                         
+
                         </a>
                         <ul class="dropdown-menu dropdown-menu-lg dropdown-menu-end">
                             <!--begin::User Image-->
@@ -203,9 +200,20 @@
                                 <img src="./assets/img/user2-160x160.jpg" class="rounded-circle shadow"
                                     alt="User Image" />
                                 <p>
-                                  
-                                    Alexander Pierce - Web Developer
-                                    <small>Member since Nov. 2023</small>
+                                    <?php
+                                     session_start();
+                                     // Check if the user is logged in, if not, redirect them to the login page
+                                     if (!isset($_SESSION['user'])) {
+                                     header("Location: login.html"); // Replace login.php with your actual login page
+                                     exit();
+                                      }
+
+                                     // The user is logged in, display their name
+                                     $display_name = htmlspecialchars($_SESSION['user']);
+                                    ?>
+
+                                   <?php echo $display_name; ?>
+                                
                                 </p>
                             </li>
                             <!--end::User Image-->
@@ -213,7 +221,7 @@
                             <!--begin::Menu Footer-->
                             <li class="user-footer">
                                 <a href="#" class="btn btn-default btn-flat">Profile</a>
-                        
+
 
                                 <a href="logout.php" class="btn btn-default btn-flat float-end">Sign out</a>
                             </li>

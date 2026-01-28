@@ -23,6 +23,7 @@
             <form method="post" action="index.php?action=update" enctype="multipart/form-data">
                 <div class="card-body">
                     <div class="row g-3">
+                        <input type="number" name="id" value="<?php echo $data['id'];?>" />
                         <div class="col-md-6 ">
                             <label for="validationCustom01" class="form-label">First name</label>
                             <input type="text" name="firstName" class="form-control"
@@ -76,25 +77,28 @@
                             </div>
                         </div>
                         <div class="col-md-4">
-                            <?php $hobbies = explode(", ", $data['hobby']); ?>
+                            <?php 
+                             $hobbies = isset($data['hobby']) ? explode(", ", $data['hobby']) : []; 
+                             ?>
                             <label class="form-check-label" for="radioDefault1">
                                 Hobby
                             </label>
                             <div class="form-check">
                                 <input class="form-check-input" type="checkbox" name="hobby[]" value="Carrom"
-                                    <?php if(in_array("Carrom",$data)) echo "checked"; ?>>
+                                    <?php if(in_array("Carrom", $hobbies)) echo "checked"; ?>>
                                 <label class="form-check-label" for="checkDefault">
                                     Carrom
                                 </label>
                             </div>
                             <div class="form-check">
                                 <input class="form-check-input" type="checkbox" name="hobby[]" value="Chess"
-                                    <?php if(in_array("Chess",$data)) echo "checked"; ?>>
+                                    <?php if(in_array("Chess", $hobbies)) echo "checked"; ?>>
                                 <label class="form-check-label" for="checkChecked">
                                     Chess
                                 </label>
                             </div>
                         </div>
+
                         <div class="col-md-4">
                             <label for="validationCustom04" class="form-label">Country</label>
                             <select class="form-select" name="country" required>

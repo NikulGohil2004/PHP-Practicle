@@ -9,7 +9,7 @@ $action = $_GET['action'] ?? 'index';
 
 if ($action == 'store') $controller->store();
 elseif ($action == 'edit') $controller->edit($_GET['id']);
-elseif ($action == 'update') $controller->update();
+elseif ($action == 'update') $controller->update($_GET['id']);
 elseif ($action == 'delete') $controller->delete($_GET['id']);
 else $controller->index();
 ?>

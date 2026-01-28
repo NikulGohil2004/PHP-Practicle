@@ -25,7 +25,7 @@
                     <div class="row g-3">
                         <div class="col-md-6 ">
                             <label for="validationCustom01" class="form-label">First name</label>
-                            <input type="text" name="firstName" class="form-control" required />
+                            <input type="text" name="firstName" class="form-control"  />
                         </div>
                         <div class="col-md-6">
                             <label for="validationCustom02" class="form-label">Last name</label>

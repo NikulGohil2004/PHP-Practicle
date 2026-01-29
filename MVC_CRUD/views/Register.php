@@ -29,7 +29,7 @@
                         </div>
                         <div class="col-md-6">
                             <label for="validationCustom02" class="form-label">Last name</label>
-                            <input type="text" name="lastName" class="form-control" required />
+                            <input type="text" name="lastName" class="form-control"  />
 
                         </div>
                         <div class="col-md-4">
@@ -37,17 +37,17 @@
                             <div class="input-group has-validation">
 
                                 <input type="email" name="email" class="form-control"
-                                    aria-describedby="inputGroupPrepend" required />
+                                    aria-describedby="inputGroupPrepend"  />
                             </div>
                         </div>
                         <div class="col-md-4">
                             <label for="validationCustom03" class="form-label">Password</label>
-                            <input type="password" name="password" class="form-control" required />
+                            <input type="password" name="password" class="form-control"  />
 
                         </div>
                          <div class="col-md-4">
                             <label for="validationCustom03" class="form-label">Confirm-Password</label>
-                            <input type="password" name="ConfirmPassword" class="form-control" required />
+                            <input type="password" name="confirmPassword" class="form-control" required />
 
                         </div>
                         <div class="col-md-6">

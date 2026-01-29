@@ -27,35 +27,35 @@
                         <div class="col-md-6 ">
                             <label for="validationCustom01" class="form-label">First name</label>
                             <input type="text" name="firstName" class="form-control"
-                                value="<?php echo $data['firstName']; ?>" required />
+                                value="<?php echo $data['firstName']; ?>"  />
                         </div>
                         <div class="col-md-6">
                             <label for="validationCustom02" class="form-label">Last name</label>
                             <input type="text" name="lastName" class="form-control"
-                                value="<?php echo $data['lastName']; ?>" required />
+                                value="<?php echo $data['lastName']; ?>"  />
                         </div>
                         <div class="col-md-6">
                             <label for="validationCustomUsername" class="form-label">Email</label>
                             <div class="input-group has-validation">
                                 <input type="email" name="email" class="form-control"
                                     value="<?php echo $data['email']; ?>" aria-describedby="inputGroupPrepend"
-                                    required />
+                                     />
                             </div>
                         </div>
                         <div class="col-md-6">
                             <label for="validationCustom03" class="form-label">Password</label>
                             <input type="password" name="password" class="form-control"
-                                value="<?php echo $data['password']; ?>" id="validationCustom03" required />
+                                value="<?php echo $data['password']; ?>" id="validationCustom03"  />
                         </div>
                         <div class="col-md-6">
                             <label for="validationCustom03" class="form-label">Address</label>
                             <input type="text" class="form-control" name="addres" value="<?php echo $data['addres']; ?>"
-                                required />
+                                 />
                         </div>
                         <div class="col-md-6">
                             <label for="validationCustom03" class="form-label">Phone-Number</label>
                             <input type="number" name="phoneNumber" value="<?php echo $data['phoneNumber']; ?>"
-                                class="form-control" required />
+                                class="form-control"  />
                         </div>
                         <div class="col-md-4">
                             <label class="form-check-label" for="radioDefault1">
@@ -101,17 +101,19 @@
 
                         <div class="col-md-4">
                             <label for="validationCustom04" class="form-label">Country</label>
-                            <select class="form-select" name="country" required>
+                            <select class="form-select" name="country" >
                                 <option value="India" <?php if($data['country']=="India") echo "selected"; ?>>INDIA
                                 </option>
                                 <option value="USA" <?php if($data['country']=="USA") echo "selected"; ?>>USA</option>
                             </select>
                         </div>
                         <div class="col-md-6 ">
+                            <div class="col-md-6">
+                            <label class="form-label">Image: <?php echo $data['filenam']; ?></label>
                             <div class="input-group mb-3">
-                                <input type="file" class="form-control" name="uploadfile" value="" required />
+                                <input type="file" class="form-control" name="uploadfile" value="<?php echo $data['filenam']; ?>" />
                             </div>
-                            <div class="cold-md-6">
+                             <div class="cold-md-6">
                                 <img src="upload/<?php echo $data['filenam']; ?>" width="100"><br>
                             </div>
                         </div>

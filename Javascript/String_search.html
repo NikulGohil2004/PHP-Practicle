@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>String_search</title>
+</head>
+<body>
+    <script>
+        let index = "hello world my name is world nikul";
+        console.log(index.indexOf("world")); // first occurance of string and return the index of that if not found return -1
+        console.log(index.lastIndexOf("world")); // last occurance of string andreturn the index o that if not found return -1
+        console.log(index.search("my")); // retun the index of that word
+        console.log(index.match("world")); // return the array and index and rest of string
+        console.log(index.match(/world/g)); // /g will global scope will perofrm on all string /i for case-insesitive
+        console.log(index.matchAll("world")); // return all the values
+        console.log(index.includes("name")); // return the true if match value
+        console.log(index.startsWith("hello")); // return true if start with hello else false
+        console.log(index.endsWith("nikul")); // return true id end with nikyl else false
+        console.log(index.valueOf()); //return value of index var
+    </script>
+</body>
+</html>

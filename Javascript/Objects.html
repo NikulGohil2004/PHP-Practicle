@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Objects</title>
+</head>
+
+<body>
+    <script>
+        const name = {
+            firstName: "Nikul",
+            secondName: "Gohil",
+            age: 21,
+
+        };
+        delete name.age; // delete object property
+        let print = name.firstName;
+        console.log(name);
+
+        const nikul1 = {
+            name2: {
+                firstName: "rahul",
+                lastName: "Dave"
+            }
+        };
+        console.log(nikul1);
+
+        //convert object into array
+
+        const first = {
+            name: "nikul",
+            age: 21
+        };
+        const myArray = Object.values(first);
+        console.log(myArray);
+
+        //simple to use objects in loops
+
+        const fruits = { Bananas: 300, Oranges: 200, Apples: 500 };
+
+        let text = "";
+        for (let [fruit, value] of Object.entries(fruits)) {
+            text += fruit + ": " + value + "<br>";
+        }
+        console.log(fruits);
+
+        // convert objects into string
+        let convert = JSON.stringify(fruits);
+        console.log(convert);
+        
+    </script>
+</body>
+
+</html>

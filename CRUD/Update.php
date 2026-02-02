@@ -1,11 +1,14 @@
 
 
 <?php
+error_reporting(E_ALL); // Report all errors, warnings, and notices
+ini_set('display_errors', '1'); // Display errors in the browser
+ini_set('display_startup_errors', '1'); 
 include 'Config.php';
 
 $id = $_GET['id'];
 
-$select = "SELECT * FROM student WHERE id='$id'";
+$select = "SELECT * FROM students WHERE id='$id'";
 $data = mysqli_query($con, $select);
 $row = mysqli_fetch_assoc($data);
 
@@ -15,7 +18,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $firstName = $_POST['firstName'];
     $lastName = $_POST['lastName'];
     $email = $_POST['email'];
-    $passwor = $_POST['password'];
+    $password = $_POST['password'];
     $addres = $_POST['addres'];
     $phoneNumber = $_POST['phoneNumber'];
     $gender = $_POST['gender'];
@@ -35,11 +38,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $filename = $row['filenam']; 
     }
 
-    $sql = "UPDATE student SET 
+    $sql = "UPDATE students SET 
         firstName='$firstName',
         lastName='$lastName',
         email='$email',
-        passwor='$passwor',
+        password='$password',
         addres='$addres',
         phoneNumber='$phoneNumber',
         gender='$gender',
@@ -75,7 +78,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     <input type="email" name="email" value="<?php echo $row['email']; ?>" required><br>
 
     Password:
-    <input type="password" name="password" value="<?php echo $row['passwor']; ?>" required><br>
+    <input type="password" name="password" value="<?php echo $row['password']; ?>" required><br>
 
     Address:
     <input type="text" name="addres" value="<?php echo $row['addres']; ?>" required><br>

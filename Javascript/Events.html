@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+
+<body>
+
+    <button id="myBtn">Time</button>
+    <div id="box" style="width:200px;height:100px;padding:16px;border:1px solid #000;">
+        Move mouse over this box
+    </div>
+    <input id="k" type="text" placeholder="Press a key">
+    <p id="demo"></p>
+
+    <script>
+        const btn = document.getElementById("myBtn");
+        // Add EventListener to btn
+        btn.addEventListener("click", function () {
+            document.getElementById("demo").innerHTML = Date();
+        });
+
+        const box = document.getElementById("box");
+
+        // Let box listen for mouseover
+        box.addEventListener("mouseover", function () {
+            box.innerHTML = "Mouse is over me!";
+        });
+
+        // Let box listen for mouseout
+        box.addEventListener("mouseout", function () {
+            box.innerHTML = "Move is out!";
+        });
+
+        const k = document.getElementById("k");
+
+        // Let k listen for keydown
+        k.addEventListener("keydown", function (event) {
+            // Then display the event.key
+            document.getElementById("demo").innerHTML = "You pressed: " + event.key;
+        });
+
+    </script>
+
+</body>
+
+</html>

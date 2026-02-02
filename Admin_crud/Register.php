@@ -27,7 +27,7 @@ include 'Config.php';
      }elseif ($password !== $confirmPassword) {
           echo "<script>alert('Password does not match')</script>";
      }else{
-         $sql = "INSERT INTO `student` 
+         $sql = "INSERT INTO `students` 
                 (firstName,lastName,email,
                 password) VALUES('$firstName','$lastName',
                 '$email','$password') "; 

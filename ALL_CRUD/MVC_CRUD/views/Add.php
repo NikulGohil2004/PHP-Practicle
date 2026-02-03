@@ -1,13 +1,10 @@
-<?php include 'ADMIN/header.php';?>
-
-
 <!doctype html>
 <html lang="en">
 
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Register</title>
+    <title>ADD</title>
     <style>
     label {
         font-weight: 500;
@@ -23,19 +20,28 @@
             <div class="card-header  text-center">
                 <div class="card-title">STUDENT ADD</div>
             </div>
-              
+
+            <?php if (!empty($errors)): ?>
+            <div class="alert alert-danger">
+                <ul>
+                    <?php foreach ($errors as $error): ?>
+                    <li><?= $error ?></li>
+                    <?php endforeach; ?>
+                </ul>
+            </div>
+            <?php endif; ?>
 
             <form method="post" action="../index.php?action=store" enctype="multipart/form-data">
                 <div class="card-body">
-                    
+
                     <div class="row g-3">
                         <div class="col-md-6 ">
                             <label for="validationCustom01" class="form-label">First name</label>
-                            <input type="text" name="firstName" class="form-control"  />
+                            <input type="text" name="firstName" class="form-control" />
                         </div>
                         <div class="col-md-6">
                             <label for="validationCustom02" class="form-label">Last name</label>
-                            <input type="text" name="lastName" class="form-control"  />
+                            <input type="text" name="lastName" class="form-control" />
 
                         </div>
                         <div class="col-md-4">
@@ -43,15 +49,15 @@
                             <div class="input-group has-validation">
 
                                 <input type="email" name="email" class="form-control"
-                                    aria-describedby="inputGroupPrepend"  />
+                                    aria-describedby="inputGroupPrepend" />
                             </div>
                         </div>
                         <div class="col-md-4">
                             <label for="validationCustom03" class="form-label">Password</label>
-                            <input type="password" name="password" class="form-control"  />
+                            <input type="password" name="password" class="form-control" />
 
                         </div>
-                         <div class="col-md-4">
+                        <div class="col-md-4">
                             <label for="validationCustom03" class="form-label">Confirm-Password</label>
                             <input type="password" name="confirmPassword" class="form-control" required />
 

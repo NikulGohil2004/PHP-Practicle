@@ -31,6 +31,7 @@
                 <div class="card mb-4">
                     <div class="card-header">
                         <h3 class="card-title text-center">STUDENT RECORDS</h3>
+                        <h4><a href="logout.php">:Logout</a></h4>
                     </div>
                     <div class="card-body">
                         <?php

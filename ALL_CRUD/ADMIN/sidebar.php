@@ -76,7 +76,7 @@
                     </a>
                   </li>
                   <li class="nav-item">
-                    <a href="/PHP-Practicle/ALL_CRUD/Admin_crud/Adduser.php" class="nav-link">
+                    <a href="../MVC_CRUD/views/Add.php" class="nav-link">
                       <i class="nav-icon bi bi-circle"></i>
                       <p>ADD</p>
                     </a>

@@ -3,13 +3,18 @@ session_start();
 ini_set('display_errors', 1);
 error_reporting(E_ALL);
 
+session_start(); 
+if (!isset($_SESSION['user_id'])) {
+    header('Location: login_form.php');
+    exit(); 
+}
+
 require_once "controllers/UserController.php";
 
 $controller = new UserController();
 $action = $_GET['action'] ?? 'index';
 $id     = $_GET['id'] ?? null;
 
-/* ACTIONS THAT REDIRECT */
 if ($action === 'store') {
     $controller->store();
     exit;
@@ -25,12 +30,12 @@ if ($action === 'delete' && $id) {
     exit;
 }
 
-/* LAYOUT */
+
 include(__DIR__ . '/../ADMIN/header.php');
 include(__DIR__ . '/../ADMIN/csslink.php');
 include(__DIR__ . '/../ADMIN/sidebar.php');
 
-/* VIEWS */
+
 if ($action === 'add') {
     $controller->add();
 } elseif ($action === 'edit' && $id) {

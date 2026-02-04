@@ -1,18 +1,15 @@
 <?php
-// get validation data from session
+
 $errors = $_SESSION['errors'] ?? [];
 $old    = $_SESSION['old'] ?? [];
 
-// clear flash data
 unset($_SESSION['errors'], $_SESSION['old']);
 
-// hobbies safe explode
 $hobbies = !empty($data['hobby'])
     ? explode(", ", $data['hobby'])
     : [];
 ?>
 
-<!-- CONTENT ONLY -->
 <div class="container-fluid mt-4">
     <div class="row justify-content-center">
         <div class="col-md-8 col-lg-6">
@@ -31,7 +28,6 @@ $hobbies = !empty($data['hobby'])
                     </div>
                 <?php endif; ?>
 
-                <!-- FORM -->
                 <form method="post"
                       action="index.php?action=update&id=<?= $data['id'] ?>"
                       enctype="multipart/form-data">

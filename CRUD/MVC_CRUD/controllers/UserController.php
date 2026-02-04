@@ -58,9 +58,9 @@ class UserController {
         $errors[] = "Confirm password is required";
     } elseif ($password !== $confirm) {
         $errors[] = "Password and confirm password do not match";
-    }elseif (!preg_match('/^[a-zA-Z0-9]{10}$/', $password)) {
-    $errors[] = "Password must be exactly 10 characters and contain only letters and numbers.";
-     }
+    }elseif(!preg_match( '/^[a-zA-Z0-9]+$/' , $password)) {
+    $errors[] = 'Password can only contain letters and numbers.';
+}
 
     if ($addres === '') {
         $errors[] = "Address is required";

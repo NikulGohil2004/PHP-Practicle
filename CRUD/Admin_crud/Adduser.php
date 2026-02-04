@@ -3,6 +3,12 @@ ini_set('display_errors', 1);
 ini_set('display_startup_errors', 1);
 error_reporting(E_ALL);
 
+session_start(); 
+if (!isset($_SESSION['user_id'])) {
+    header('Location: login_form.php');
+    exit(); 
+}
+
 include 'Config.php';
 
 $errors = [];
@@ -23,7 +29,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $gender      = $_POST['gender'] ?? '';
     $country     = $_POST['country'] ?? '';
     $hobbyArr    = $_POST['hobby'] ?? [];
-
+     $old = $_POST;
     if ($firstName === '') $errors[] = "First Name is mandatory";
     if ($lastName === '')  $errors[] = "Last Name is mandatory";
     if ($email === '')     $errors[] = "Email is mandatory";
@@ -106,22 +112,26 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
                     <div class="col-md-6">
                         <label class="form-label">First name</label>
-                        <input type="text" name="firstName" class="form-control" value="<?php echo $firstName; ?>">
+                        <input type="text" name="firstName" class="form-control"
+                            value="<?= htmlspecialchars($old['firstName'] ?? '') ?>">
                     </div>
 
                     <div class="col-md-6">
                         <label class="form-label">Last name</label>
-                        <input type="text" name="lastName" class="form-control" value="<?php echo $lastName; ?>">
+                        <input type="text" name="lastName" class="form-control"
+                            value="<?= htmlspecialchars($old['lastName'] ?? '') ?>">
                     </div>
 
                     <div class="col-md-6">
                         <label class="form-label">Email</label>
-                        <input type="email" name="email" class="form-control" value="<?php echo $email; ?>">
+                        <input type="email" name="email" class="form-control"
+                            value="<?= htmlspecialchars($old['email'] ?? '') ?>">
                     </div>
 
                     <div class="col-md-6">
                         <label class="form-label">Password</label>
-                        <input type="password" name="password" class="form-control">
+                        <input type="password" name="password" class="form-control"
+                            value="<?= htmlspecialchars($old['password'] ?? '') ?>">
                     </div>
 
                     <div class="col-md-6">

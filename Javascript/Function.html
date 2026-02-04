@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>
+        function
+    </title>
+</head>
+
+<body>
+    <p id="demo"></p>
+
+    <script>
+        // simple function
+        function sayHello() {
+            return "Hello World";
+        }
+
+        document.getElementById("demo").innerHTML = sayHello();
+        console.log(sayHello());
+
+        //function with argument
+        function sawHello(a,b){
+            return a+b;
+        }
+        console.log(sawHello(5,7));
+
+        // arrow function
+
+        const addSum =(first,second) =>{
+            return first*second;
+        }
+        console.log(addSum(12,12));
+    </script>
+</body>
+
+</html>

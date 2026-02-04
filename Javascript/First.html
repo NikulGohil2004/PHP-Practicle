@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script>
+        function addName(){
+            document.getElementById("demo").style.fontSize="50px";
+        }
+    </script>
+</head>
+<body>
+    <p id="demo">HEllo world.</p>
+    <button type="button" 
+            onclick='addName()'>
+            Chenge Text </button>
+        
+      <!-- Changing style of Html element -->
+       <p id="font">HEllo world.</p>
+     <button type="button" 
+            onclick='document.getElementById("font").style.fontSize="35px"'>
+            Chenge Font-Size </button>       
+</body>
+</html>

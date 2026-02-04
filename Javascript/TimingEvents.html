@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+<body>
+
+<button id="btn">Start</button>
+
+<p id="demo"></p>
+
+<script>
+const btn = document.getElementById("btn");
+
+// Let btn listen for a click
+btn.addEventListener("click", function () {
+// Then call showMsg after 2 seconds
+  setTimeout(showMsg, 1000);
+});
+
+// Function to display message
+function showMsg() {
+  document.getElementById("demo").innerHTML = "Hello after 1 seconds!";
+}
+</script>
+
+</body>
+</html>

@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Date</title>
+</head>
+<body>
+    <script>
+        const d = new Date();
+        console.log(d);
+        console.log(new Date("2026-01-30")); // for new date
+
+        const a = new Date();
+        a.toDateString(); // convert date into more redable format
+        console.log(a);
+
+        console.log(a.toISOString()); // convrt date into string
+        console.log(a.getFullYear()); // return full yeare current date and time
+        console.log(a.getMonth()); // get month of current date and time
+        console.log(a.getTimezoneOffset()); // return diff between local and utc time
+
+        const firstTime = new Date("January 01, 2025");
+        console.log(firstTime.setFullYear(2026));
+
+       
+    </script>
+</body>
+</html>

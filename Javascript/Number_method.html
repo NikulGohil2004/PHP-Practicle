@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>
+        Number Methods
+    </title>
+</head>
+<body>
+    <script>
+        let x =123;
+        console.log(x.toString()); // return number as string
+        console.log(x.toExponential()); // return into exponetial
+        console.log(x.toFixed(3)); // fixed at decimal points
+        console.log(x.toPrecision(5)); // specific length of number
+        console.log(x.valueOf()); // returnvalue of x as a number and all above as a string
+        console.log(Number("nikul")); // convert into number
+        console.log(Number(10));   // convert into number
+        console.log(Number(new Date("2021-12-12"))); // convert into number
+       
+        console.log(parseInt("102010")); // convert string into number not decimal point
+        console.log(parseFloat("10.3333")); // convert string into number with decimal all point
+        
+        // number properties
+
+        let num = Number.EPSILON; // value of epsilon is 2^-52
+        let a  = 0.1;
+        let b = 0.2;
+        console.log(a+b>num);
+
+        let maxnum = Number.MAX_VALUE; // 1.79....+308
+        console.log(maxnum);
+         
+        let minnum = Number.MIN_VALUE; // 5e-324 close to zero but positive
+        console.log(minnum);
+
+        let minSafeInt = Number.MIN_SAFE_INTEGER; //-9007199254740991
+        console.log(minSafeInt);
+         
+        let maxSafeInt = Number.MAX_SAFE_INTEGER; //9007199254740991
+        console.log(maxSafeInt);
+
+        let positiveInfinity = Number.POSITIVE_INFINITY; //infinity
+        console.log(positiveInfinity);
+    
+        let negatievInfinity = Number.NEGATIVE_INFINITY; // -infinity
+        console.log(negatievInfinity);
+        
+        
+        
+        
+        
+    </script>
+</body>
+</html>

@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>String-Function</title>
+</head>
+<body>
+    <script>
+        let text = "Nikul Gohil";
+        console.log(text.length); // length of string
+        console.log(text.charAt(0)); // it will show chr where on that index
+        console.log(text.charCodeAt(0)); // assci value of chr
+        console.log(text.codePointAt(0)); // same as charCodeAt
+        console.log(text.at(0)); // return the value of 0 index
+        let first ="Gohil";
+        let second = "nikul";
+        console.log(first.concat(" ",second)); // concate two string
+        let sliceString = "My Name is Gohil Nikul.";
+        console.log(sliceString.slice(2,10));  // cut string from given param, if i will give 2 only it will show from 2 and rest of string , -10 it will return ao chr from back.
+        console.log(sliceString.substring(2,10)); // same as slice
+        console.log(sliceString.toLowerCase()); // convert into lower case
+        console.log(sliceString.toUpperCase()); // convert into upper case
+        console.log(sliceString.isWellFormed()); // if string is well formed it will return true
+
+        let newString = "Hello World \uD800";
+        console.log(newString.toWellFormed()); // replace th all surrogates with the unicode chr
+
+        let Stringtrim = "   Nikul Gohil   ";
+        console.log(Stringtrim.trim()); //remove white space from start and end both side
+        console.log(Stringtrim.trimLeft()); //remove white space from left
+        console.log(Stringtrim.trimRight()); // remove white space from only right side
+
+        let Stringpad = "N";
+        console.log(Stringpad.padStart(2,"N")); // padding 2 times until reaches N
+        console.log(Stringpad.padEnd(3,"N"));  // gives pads from end of the string
+        console.log(Stringpad.repeat(10)); // repeat the string given times in param
+
+        let stringReplace = "Nikul ";
+        console.log(stringReplace.replace("Nikul","Gohil")); //replace string from given new string and use /i to become string replace insensitive
+
+        let stringReplaceall = "gohil nikul hello world my name is nikul gohil";
+        console.log(stringReplaceall.replaceAll("nikul","rahul")); // we can replace the string with many at once
+        
+        let strtoArray = "Nikul Gohil";
+        console.log(strtoArray.split()); // convert string into array
+    </script>
+</body>
+</html>

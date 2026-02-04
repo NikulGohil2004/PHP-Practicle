@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Array</title>
+</head>
+
+<body>
+    <script>
+        const array = ["nikul", "gohil"];
+        console.log(array); // create and  print array
+
+        console.log(array[0]); // get first elementof array
+
+        console.log(array.push("hello")); // insert element into array
+
+        console.log(array); // insert element in array
+
+        console.log(array.length); // length of an array
+
+        console.log(array.sort()); // sort array into ascending order
+
+        let access = array[array.length - 1]; // accces lasr element of an array
+        console.log(access);
+
+        const fruits = ['apple', 'banana', 'cherry']; // loop an array using for loop
+
+        for (const fruit of fruits) {
+            console.log(fruit);
+        }
+
+        console.log(fruits.toString()); //conver elemnet into comma sperated string
+        console.log(fruits.at(2)); // access 3 element of an array
+        console.log(fruits.join("*")); // you can add anything in param to diifernciate
+        console.log(fruits.pop()); // delete last elemnt of an array
+        console.log(fruits.push("nikul")); // add elemnet of an array at the end
+        console.log(fruits.shift()); // remove first elemnet of an array and shift to left all elemnt
+        console.log(fruits.unshift("hello")); // add element to begining
+        console.log(fruits);
+        console.log(Array.isArray(fruits)); // it will check array type if it is it willreturn true
+
+        const first = ["hello", "nikul", "gohil"];
+        const second = ["welcome", "tothe", "world"];
+
+        console.log(first.concat(second)); // merge to the array
+
+        console.log(second.copyWithin(2, 0)); // copy 2 index to 0
+
+        const myArr = [[1, 2], [3, 4], [5, 6]];
+        console.log(myArr.flat()); // convert into single array
+
+        const arrayOne = [1, 2, 3, 4, 5, 6];
+        const newArr = arrayOne.flatMap(x => [x, x * 10]);
+
+        console.log(newArr); // 1,10,2,20,3,30...
+
+        const Splice = ["hiii", "not hii"];
+        console.log(Splice.toSpliced(0, 1)); // remove first ele of an array
+
+        const Slice = ["hiii", "not hii"];
+        console.log(Slice.slice(1)); // start with index 1
+
+        // array search
+        const fruits1 = ["Apple", "Orange", "Apple", "Mango"];
+        let position = fruits1.indexOf("Apple");
+        console.log(position); // get index of element
+        console.log(fruits1.lastIndexOf()); // last index of an array
+        console.log(fruits1.includes("Apple")); //true if contains ele
+
+        const temp = [27, 28, 30, 40, 42, 35, 30];
+        console.log(temp.findLast(x => x > 40)); // find last element based on condition
+        console.log(temp.findLastIndex(x => x > 40));
+
+        //sorting
+        console.log(temp.reverse()); // reverse the array
+        console.log(temp.toReversed()); // do not change the diretly in original
+
+        let SSort = temp.sort(function (a, b) { return a - b; });
+        console.log(SSort); // sort the array accuratly
+
+        // array iteration
+        // for-Each
+        const fruit = ["apple", "banana", "cherry"];
+        fruit.forEach((fruits) => { console.log(fruits); });
+
+        //using Map
+        fruit.map((fruits) => { console.log(fruits); });
+
+        //filter
+        const nums = [1, 2, 5, 8, 130, 44];
+        let filter = nums.filter(num => num >= 10);
+        console.log(filter);
+
+        //evry it will check evry ele of array which is bigger than 18? true if it is.
+
+        const numbers = [45, 4, 9, 16, 25];
+        let allOver18 = numbers.every(myFunction);
+
+        function myFunction(value, index, array) {
+            return value > 18;
+        }
+        console.log(allOver18);
+
+        //some will check some elemet pass the function?
+
+        let someOver18 = numbers.some(myFunction);
+
+        function myFunction(value, index, array) {
+            return value > 18;
+        }
+        console.log(someOver18);
+
+        // Array.from convert evry word of the string will be elemnt of an array
+
+        const Vowels = "ABCDEFGHIJKLMNOPQ";
+        console.log(Array.from(Vowels));
+
+      
+
+
+
+
+    </script>
+</body>
+
+</html>

@@ -7,5 +7,3 @@
   </ul>
 </div>
 <?php endif; ?>
-
-<!-- Your form starts below -->

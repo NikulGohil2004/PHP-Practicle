@@ -1,3 +1,4 @@
+
 <?php
 require_once "config/Database.php";
 require_once "models/User.php";
@@ -18,7 +19,10 @@ class UserController {
     public function store() {
 
         $errors = [];
+<<<<<<< HEAD
+=======
 
+>>>>>>> 76049877638658107077f8633b92ea7a040cc349
         $firstName = trim($_POST['firstName']);
         $lastName = $_POST['lastName'];
         $email = $_POST['email'];
@@ -55,9 +59,15 @@ class UserController {
         if ($image == "") $errors[] = "Image upload is required";
 
         if (!empty($errors)) {
+<<<<<<< HEAD
+            include "views/Add.php";
+             exit();
+        }else{
+=======
             include "views/Create.php";
             return;
         }
+>>>>>>> 76049877638658107077f8633b92ea7a040cc349
 
         $this->user->create(
             $firstName,
@@ -73,6 +83,10 @@ class UserController {
         );
 
         header("Location: index.php");
+<<<<<<< HEAD
+        }
+=======
+>>>>>>> 76049877638658107077f8633b92ea7a040cc349
     }
 
     public function edit($id) {
@@ -130,4 +144,5 @@ class UserController {
         $this->user->delete($id);
         header("Location: index.php");
     }
+     
 }

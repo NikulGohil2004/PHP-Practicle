@@ -1,6 +1,3 @@
-
-
-
 <?php
 ini_set('display_errors', 1);
 ini_set('display_startup_errors', 1);
@@ -88,107 +85,116 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 ?>
 <?php include(__DIR__ . '/../ADMIN/header.php'); ?>
 <?php include(__DIR__ . '/../ADMIN/csslink.php'); ?>
-      <script src="https://cdn.jsdelivr.net/npm/admin-lte@4.0.0-rc3/dist/js/adminlte.min.js" crossorigin="anonymous">
-      </script>
+<script src="https://cdn.jsdelivr.net/npm/admin-lte@4.0.0-rc3/dist/js/adminlte.min.js" crossorigin="anonymous">
+</script>
 <?php include(__DIR__ . '/../ADMIN/sidebar.php'); ?>
 <!doctype html>
 <html lang="en">
+
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Add User</title>
     <style>
-        label { font-weight: 500; }
+    label {
+        font-weight: 500;
+    }
     </style>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet">
 </head>
 
 <body>
-<div class="container row justify-content-center">
-<div class="card card-info card-outline mb-4 mt-4 w-50">
+    <div class="container row justify-content-center">
+        <div class="card card-info card-outline mb-4 mt-4 w-50">
 
-<div class="card-header text-center">
-    <div class="card-title">ADD STUDENT</div>
-</div>
+            <div class="card-header text-center">
+                <div class="card-title">ADD STUDENT</div>
+            </div>
 
-<?php if (!empty($errors)) { ?>
-    <div class="alert alert-danger text-center m-3">
-        <?php foreach ($errors as $error) { ?>
-            <div><?php echo $error; ?></div>
-        <?php } ?>
+            <?php if (!empty($errors)) { ?>
+            <div class="alert alert-danger text-center m-3">
+                <?php foreach ($errors as $error) { ?>
+                <div><?php echo $error; ?></div>
+                <?php } ?>
+            </div>
+            <?php } ?>
+
+            <form method="post" enctype="multipart/form-data">
+                <div class="card-body">
+                    <div class="row g-3">
+
+                        <div class="col-md-6">
+                            <label class="form-label">First name</label>
+                            <input type="text" name="firstName" class="form-control" value="<?php echo $firstName; ?>">
+                        </div>
+
+                        <div class="col-md-6">
+                            <label class="form-label">Last name</label>
+                            <input type="text" name="lastName" class="form-control" value="<?php echo $lastName; ?>">
+                        </div>
+
+                        <div class="col-md-6">
+                            <label class="form-label">Email</label>
+                            <input type="email" name="email" class="form-control" value="<?php echo $email; ?>">
+                        </div>
+
+                        <div class="col-md-6">
+                            <label class="form-label">Password</label>
+                            <input type="password" name="password" class="form-control">
+                        </div>
+
+                        <div class="col-md-6">
+                            <label class="form-label">Address</label>
+                            <input type="text" name="addres" class="form-control" value="<?php echo $addres; ?>">
+                        </div>
+
+                        <div class="col-md-6">
+                            <label class="form-label">Phone-Number</label>
+                            <input type="number" name="phoneNumber" class="form-control"
+                                value="<?php echo $phoneNumber; ?>">
+                        </div>
+
+                        <div class="col-md-4">
+                            <label class="form-label">Gender</label><br>
+                            <input type="radio" name="gender" value="male" <?php if($gender=="male") echo "checked"; ?>>
+                            Male
+                            <input type="radio" name="gender" value="female"
+                                <?php if($gender=="female") echo "checked"; ?>> Female
+                        </div>
+
+                        <div class="col-md-4">
+                            <label class="form-label">Hobby</label><br>
+                            <input type="checkbox" name="hobby[]" value="Carrom"
+                                <?php if(in_array("Carrom",$hobbyArr)) echo "checked"; ?>> Carrom
+                            <input type="checkbox" name="hobby[]" value="Chess"
+                                <?php if(in_array("Chess",$hobbyArr)) echo "checked"; ?>> Chess
+                        </div>
+
+                        <div class="col-md-4">
+                            <label class="form-label">Country</label>
+                            <select class="form-select" name="country">
+                                <option value="">Select</option>
+                                <option value="India" <?php if($country=="India") echo "selected"; ?>>INDIA</option>
+                                <option value="USA" <?php if($country=="USA") echo "selected"; ?>>USA</option>
+                            </select>
+                        </div>
+
+                        <div class="col-md-6">
+                            <label class="form-label">Profile Image</label>
+                            <input type="file" name="uploadfile" class="form-control">
+                        </div>
+
+                    </div>
+                </div>
+
+                <div class="card-footer text-center">
+                    <input class="btn btn-info" value="Add User" type="submit">
+                </div>
+
+            </form>
+        </div>
     </div>
-<?php } ?>
-
-<form method="post" enctype="multipart/form-data">
-<div class="card-body">
-<div class="row g-3">
-
-<div class="col-md-6">
-<label class="form-label">First name</label>
-<input type="text" name="firstName" class="form-control" value="<?php echo $firstName; ?>">
-</div>
-
-<div class="col-md-6">
-<label class="form-label">Last name</label>
-<input type="text" name="lastName" class="form-control" value="<?php echo $lastName; ?>">
-</div>
-
-<div class="col-md-6">
-<label class="form-label">Email</label>
-<input type="email" name="email" class="form-control" value="<?php echo $email; ?>">
-</div>
-
-<div class="col-md-6">
-<label class="form-label">Password</label>
-<input type="password" name="password" class="form-control">
-</div>
-
-<div class="col-md-6">
-<label class="form-label">Address</label>
-<input type="text" name="addres" class="form-control" value="<?php echo $addres; ?>">
-</div>
-
-<div class="col-md-6">
-<label class="form-label">Phone-Number</label>
-<input type="number" name="phoneNumber" class="form-control" value="<?php echo $phoneNumber; ?>">
-</div>
-
-<div class="col-md-4">
-<label class="form-label">Gender</label><br>
-<input type="radio" name="gender" value="male" <?php if($gender=="male") echo "checked"; ?>> Male
-<input type="radio" name="gender" value="female" <?php if($gender=="female") echo "checked"; ?>> Female
-</div>
-
-<div class="col-md-4">
-<label class="form-label">Hobby</label><br>
-<input type="checkbox" name="hobby[]" value="Carrom" <?php if(in_array("Carrom",$hobbyArr)) echo "checked"; ?>> Carrom
-<input type="checkbox" name="hobby[]" value="Chess" <?php if(in_array("Chess",$hobbyArr)) echo "checked"; ?>> Chess
-</div>
-
-<div class="col-md-4">
-<label class="form-label">Country</label>
-<select class="form-select" name="country">
-<option value="">Select</option>
-<option value="India" <?php if($country=="India") echo "selected"; ?>>INDIA</option>
-<option value="USA" <?php if($country=="USA") echo "selected"; ?>>USA</option>
-</select>
-</div>
-
-<div class="col-md-6">
-<label class="form-label">Profile Image</label>
-<input type="file" name="uploadfile" class="form-control">
-</div>
-
-</div>
-</div>
-
-<div class="card-footer text-center">
-    <input class="btn btn-info" value="Add User" type="submit">
-</div>
-
-</form>
-</div>
-</div>
 </body>
+
 </html>
- <?php include(__DIR__ . '/../ADMIN/footer.php'); ?>
+<?php include(__DIR__ . '/../ADMIN/footer.php'); ?>

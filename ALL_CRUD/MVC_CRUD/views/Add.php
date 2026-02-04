@@ -1,3 +1,11 @@
+<?php include(__DIR__ . '/../ADMIN/header.php'); ?>
+<?php include(__DIR__ . '/../ADMIN/csslink.php'); ?>
+      <script src="https://cdn.jsdelivr.net/npm/admin-lte@4.0.0-rc3/dist/js/adminlte.min.js" crossorigin="anonymous">
+      </script>
+
+     <?php include(__DIR__ . '/../ADMIN/sidebar.php'); ?>
+
+
 <!doctype html>
 <html lang="en">
 
@@ -129,3 +137,4 @@
 </body>
 
 </html>
+  <?php include(__DIR__ . '/../ADMIN/footer.php'); ?>

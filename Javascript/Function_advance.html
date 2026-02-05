@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Function-Advanced</title>
+</head>
+
+<body>
+    <script>
+        function nikul(x, y) {   // general function
+            return x * y;
+        }
+        console.log(nikul(10, 20));
+
+        const myfunction = function name(x, y) { // named function
+            return x + y;
+        }
+        console.log(myfunction(10, 20));
+
+        const newFunction = function (x, y) {  //anonyumus function
+            return x - y;
+        }
+        console.log(newFunction(30, 20));
+
+        const arrorFunction = (x, y) => {   // arrow function
+            return x + y;
+        }
+        console.log(arrorFunction(3, 3));
+
+        const constructorFunction = new Function("x", "y", "return x+y"); //constructor function
+        console.log(constructorFunction(10, 20));
+
+        // arguments lengths
+
+        function argue(x, y, z) {
+            return arguments.length;
+        }
+        console.log(argue(10, 20, 230));
+
+        let text = argue.toString();
+        console.log(text);
+
+        // this keyword using in person object
+        const person = {
+            firstName: "John",
+            lastName: "smith",
+            sayHello: function () {
+                return this.firstName;
+            },
+            sayBye: function () {
+                return this.lastName;
+            },
+        };
+
+        let hello = person.sayHello();
+        let bye = person.sayBye();
+        console.log(hello, bye);
+
+
+        // using fullname of person1 and taking values of person11 using call()
+        const person1 = {
+            fullName: function () {
+                return this.firstName + " " + this.lastName;
+            }
+        }
+        const person11 = {
+            firstName: "John",
+            lastName: "Doe"
+        }
+        const person2 = {
+            firstName: "Mary",
+            lastName: "Doe"
+        }
+
+        // This will return "John Doe":
+
+        console.log(person1.fullName.call(person11));
+
+
+        const fruits = {
+            names: function () {
+                return this.id + this.firstName;
+            }
+        };
+        const fruit = {
+            id: 10,
+            firstName: "mango",
+        };
+
+        console.log(fruits.names.call(fruit));
+
+        // using apply() we can pass array into argument in this as a first argument
+
+        const newApply = { name: "nikul" };
+
+        function greet(greeting) {
+            return greeting + this.name;
+        }
+
+        console.log(greet.apply(newApply, ["Gohil"]));
+
+        // call() takes argment seprately and apply() takes as array
+
+        //bind()
+
+        const bind1 = { name: "nikul" };
+        const bind2 = { name: "gohil" };
+
+        function sayHii() {
+            return this.name;
+        }
+
+        let nikul1 = sayHii.bind(bind1);
+
+        console.log(nikul1());
+
+        function newBind(a, b) {
+            return a * b;
+        }
+        let newlyBind = newBind.bind(null, 10);
+        console.log(newlyBind(5));
+
+
+    </script>
+</body>
+
+</html>

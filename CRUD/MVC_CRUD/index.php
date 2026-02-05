@@ -3,9 +3,8 @@ session_start();
 ini_set('display_errors', 1);
 error_reporting(E_ALL);
 
-session_start(); 
 if (!isset($_SESSION['user_id'])) {
-    header('Location: login_form.php');
+    header('Location: ../Admin_crud/login_form.php');
     exit(); 
 }
 

@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Typed array</title>
+</head>
+<body>
+    <script>
+        const myArr = new Uint8Array(5);
+         console.log(myArr);
+         
+         const newArr = new Uint8Array([1,2,3,4,5]);
+         console.log(newArr);
+
+         const myArrr = Int16Array.from("1234567890"); // create types array from string
+         console.log(myArrr);
+
+         const myArrtoarr = Int16Array.from([1,2,3,4,5,6,7,8,9,0]); // create typed array from array
+         console.log(myArrtoarr);
+
+         const myArrroarg = Int16Array.of(1,2,3,4,5,6,7,8,9,0); // create typed array from arguements
+         console.log(myArrroarg);
+         
+         console.log(myArrroarg.constructor.name);
+         console.log(myArr.constructor.name);  // datatype of typed array
+
+         console.log(myArr.fill(20)); // fill the values given
+         console.log(myArr.find((x) => x > 18)); // check condition and return true or false
+
+
+         
+
+         
+         
+    </script>
+</body>
+</html>

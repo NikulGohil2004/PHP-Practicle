@@ -30,6 +30,8 @@
                         <input type="email" name="email" class="form-control"
                             value="<?= htmlspecialchars($old['email'] ?? '') ?>">
                     </div>
+
+                    <div></div>
                        <div class="col-md-6">
                         <label class="form-label">Password</label>
                         <input type="password" name="password" class="form-control"

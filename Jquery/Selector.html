@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+<head>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+<script>
+$(document).ready(function(){
+  $("button").click(function(){
+    $("p").toggle(); //show for show contents,hide for hide content and toggle is used for both 
+    $(".hello").toggle(); // class slector
+   $("#hel").toggle(); // id selctor
+  });
+});
+</script>
+</head>
+<body>
+
+<h2 class="hello">This is a heading</h2>
+
+<h3 id="hel">This is a paragraph.</h3>
+<p>This is another paragraph.</p>
+
+<button>Click me to hide paragraphs</button>
+
+</body>
+</html>

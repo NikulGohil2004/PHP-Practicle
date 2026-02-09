@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html>
+<head>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+<script>
+$(document).ready(function(){
+  $("button").click(function(){
+    $("#pa").fadeToggle("slow");  //fadin for in , fadout for out text ,fadetoggle for both
+    $("#pa").fadeTo(0.5,"slow")
+  });
+});
+</script>
+</head>
+<body>
+
+<p id="pa">This is another paragraph.</p>
+
+<button>Click me to hide paragraphs</button>
+
+</body>
+</html>

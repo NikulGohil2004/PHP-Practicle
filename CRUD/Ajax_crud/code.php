@@ -12,24 +12,6 @@ if(isset($_POST['save_student']))
     $country     = $_POST['country'] ?? '';
     $hobbyArr    = $_POST['hobby'] ?? [];
 
-   
-    $hobby = implode(", ", $hobbyArr);
-
-    if (!empty($_FILES['uploadfile']['name'])) {
-
-        $uploadDir = "upload/";
-        if (!is_dir($uploadDir)) {
-            mkdir($uploadDir, 0777, true);
-        }
-
-        $ext = pathinfo($_FILES['uploadfile']['name'], PATHINFO_EXTENSION);
-        $filename = time() . "_" . rand(1000,9999) . "." . $ext;
-
-        move_uploaded_file($_FILES['uploadfile']['tmp_name'], $uploadDir.$filename);
-    } else{
-        $errors[] = "Profile image is mandatory";
-    }
-    
       $sql = "INSERT INTO students
         (firstName, lastName, email, password, addres, phoneNumber, gender, country, hobby, filenam)
         VALUES

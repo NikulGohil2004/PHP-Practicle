@@ -9,7 +9,7 @@
                 <h5 class="modal-title" id="exampleModalLabel">Add Student</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
-            <form id="saveStudent" method="post" action="code.php">
+            <form id="saveStudent" method="post" action="">
                 <div class="modal-body">
 
                     <div id="errorMessage" class="alert alert-warning d-none"></div>
@@ -53,7 +53,7 @@
                         <input type="radio" name="gender" value="female" <?php if($gender=="female") echo "checked"; ?>>
                         Female
                     </div>
-                  
+                
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
@@ -233,11 +233,10 @@ $(document).on('submit', '#saveStudent', function(e) {
 
     var formData = new FormData(this);
     formData.append("save_student", true);
-
     $.ajax({
         type: "POST",
         url: "code.php",
-        data: formData,
+        data: new FormData( this ),
         processData: false,
         contentType: false,
         success: function(response) {
@@ -311,7 +310,6 @@ $(document).on('submit', '#updateStudent', function(e) {
         contentType: false,
         success: function(response) {
      
-
             var res = jQuery.parseJSON(response);
             if (res.status == 422) {
                 $('#errorMessageUpdate').removeClass('d-none');
@@ -352,9 +350,11 @@ $(document).on('click', '.viewStudentBtn', function() {
                 alert(res.message);
             } else if (res.status == 200) {
 
-                $('#view_name').text(res.data.name);
+                $('#view_name').text(res.data.firstName);
+                $('#view_name').text(res.data.lastName);
                 $('#view_email').text(res.data.email);
-                $('#view_phone').text(res.data.phone);
+                $('#view_password').text(res.data.password);
+                $('#view_phoneNumber').text(res.data.phoneNumber);
                 $('#view_course').text(res.data.course);
 
                 $('#studentViewModal').modal('show');

@@ -83,6 +83,12 @@ elseif (!empty($_SESSION['user_email']) && isset($con)) {
   <!--end::Third Party Plugin(Bootstrap Icons)-->
   <!--begin::Required Plugin(AdminLTE)-->
   <link rel="stylesheet" href="dist/css/adminlte.css" />
+
+
+
+  <!-- AJax external css -->
+   <link rel="stylesheet" href="../Ajax_crud/form.css">
+
   <!--end::Required Plugin(AdminLTE)-->
   <!-- apexcharts -->
   <script src="https://cdn.jsdelivr.net/npm/admin-lte@4.0.0-rc3/dist/js/adminlte.min.js" crossorigin="anonymous">

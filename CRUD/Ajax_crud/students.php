@@ -1,105 +1,132 @@
 <?php include(__DIR__ . '/../ADMIN/header.php'); ?>
 <?php include(__DIR__ . '/../ADMIN/sidebar.php'); ?>
 
-
-<div class="modal fade" id="studentAddModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
+<!-- Add Student Modal -->
+<div class="modal fade" id="studentAddModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
         <div class="modal-content">
+
             <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">Add Student</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                <h5 class="modal-title">Add Student</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
             </div>
-            <form id="saveStudent" method="post" action="">
+
+            <form id="studentForm">
                 <div class="modal-body">
 
-                    <div id="errorMessage" class="alert alert-warning d-none"></div>
-
-                      <div class="col-md-6">
-                        <label class="form-label">First name</label>
-                        <input type="text" name="firstName" class="form-control"
-                            value="<?= htmlspecialchars($old['firstName'] ?? '') ?>">
-                    </div>
-                     <div class="col-md-6">
-                        <label class="form-label">Last name</label>
-                        <input type="text" name="lastName" class="form-control"
-                            value="<?= htmlspecialchars($old['lastName'] ?? '') ?>">
+                    <div class="mb-3">
+                        <label>First Name</label>
+                        <input type="text" id="firstName" name="firstName" class="form-control">
+                        <span class="text-danger error" id="firstNameErr"></span>
                     </div>
 
-                       <div class="col-md-6">
-                        <label class="form-label">Email</label>
-                        <input type="email" name="email" class="form-control"
-                            value="<?= htmlspecialchars($old['email'] ?? '') ?>">
+                    <div class="mb-3">
+                        <label>Last Name</label>
+                        <input type="text" id="lastName" name="lastName" class="form-control">
+                        <span class="text-danger error" id="lastNameErr"></span>
                     </div>
 
-                    <div></div>
-                       <div class="col-md-6">
-                        <label class="form-label">Password</label>
-                        <input type="password" name="password" class="form-control"
-                            value="<?= htmlspecialchars($old['password'] ?? '') ?>">
+                    <div class="mb-3">
+                        <label>Email</label>
+                        <input type="email" id="email" name="email" class="form-control">
+                        <span class="text-danger error" id="emailErr"></span>
                     </div>
-                      <div class="col-md-6">
-                        <label class="form-label">Address</label>
-                        <input type="text" name="addres" class="form-control" value="<?php echo $addres; ?>">
-                    </div>
-                     <div class="col-md-6">
-                        <label class="form-label">Phone-Number</label>
-                        <input type="number" name="phoneNumber" class="form-control"
-                            value="<?php echo $phoneNumber; ?>">
-                    </div>
-                     <div class="col-md-6">
-                        <label class="form-label">Gender</label><br>
-                        <input type="radio" name="gender" value="male" <?php if($gender=="male") echo "checked"; ?>>
-                        Male
-                        <input type="radio" name="gender" value="female" <?php if($gender=="female") echo "checked"; ?>>
-                        Female
-                    </div>
-                
+
                 </div>
+
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                    <button type="submit" class="btn btn-primary" name="save_student">Save Student</button>
+                    <!-- IMPORTANT: type="button" -->
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+                        Cancel
+                    </button>
+                    <button type="submit" class="btn btn-primary">
+                        Add Student
+                    </button>
                 </div>
             </form>
+
         </div>
     </div>
-
 </div>
-
-<!-- Edit Student Modal -->
-<div class="modal fade" id="studentEditModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<!-- EDIT STUDENT MODAL -->
+<div class="modal fade" id="studentEditModal" tabindex="-1">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">Edit Student</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                <h5 class="modal-title">Edit Student</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
             </div>
-            <form id="updateStudent">
+
+            <form id="updateStudent" method="post" enctype="multipart/form-data">
                 <div class="modal-body">
 
                     <div id="errorMessageUpdate" class="alert alert-warning d-none"></div>
 
                     <input type="hidden" name="student_id" id="student_id">
 
-                    <div class="mb-3">
-                        <label for="">Name</label>
-                        <input type="text" name="name" id="name" class="form-control" />
+                    <div class="mb-2">
+                        <label>First Name <span class="text-danger">*</span></label>
+                        <input type="text" name="firstName" id="edit_firstName" class="form-control" required>
                     </div>
-                    <div class="mb-3">
-                        <label for="">Email</label>
-                        <input type="text" name="email" id="email" class="form-control" />
+
+                    <div class="mb-2">
+                        <label>Last Name <span class="text-danger">*</span></label>
+                        <input type="text" name="lastName" id="edit_lastName" class="form-control" required>
                     </div>
-                    <div class="mb-3">
-                        <label for="">Phone</label>
-                        <input type="text" name="phone" id="phone" class="form-control" />PHP framework courses
+
+                    <div class="mb-2">
+                        <label>Email <span class="text-danger">*</span></label>
+                        <input type="email" name="email" id="edit_email" class="form-control" required pattern="[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}" title="Please enter a valid email address">
                     </div>
-                    <div class="mb-3">
-                        <label for="">Course</label>
-                        <input type="text" name="course" id="course" class="form-control" />Responsive Bootstrap themes
+
+                    <div class="mb-2">
+                        <label>Password <span class="text-danger">*</span></label>
+                        <input type="password" name="password" id="edit_password" class="form-control" required minlength="6" title="Password must be at least 6 characters">
                     </div>
+
+                    <div class="mb-2">
+                        <label>Address <span class="text-danger">*</span></label>
+                        <input type="text" name="addres" id="edit_addres" class="form-control" required>
+                    </div>
+
+                    <div class="mb-2">
+                        <label>Phone Number <span class="text-danger">*</span></label>
+                        <input type="number" name="phoneNumber" id="edit_phoneNumber" class="form-control" required>
+                    </div>
+
+                    <div class="mb-2">
+                        <label>Gender <span class="text-danger">*</span></label><br>
+                        <input type="radio" name="gender" id="edit_gender_male" value="male" required> Male
+                        <input type="radio" name="gender" id="edit_gender_female" value="female" required> Female
+                    </div>
+
+                    <div class="mb-2">
+                        <label>Hobby</label><br>
+                        <input type="checkbox" name="hobby[]" id="edit_hobby_carrom" value="Carrom"> Carrom
+                        <input type="checkbox" name="hobby[]" id="edit_hobby_chess" value="Chess"> Chess
+                    </div>
+
+                    <div class="mb-2">
+                        <label>Country <span class="text-danger">*</span></label>
+                        <select name="country" id="edit_country" class="form-select" required>
+                            <option value="">Select</option>
+                            <option value="India">India</option>
+                            <option value="USA">USA</option>
+                        </select>
+                    </div>
+
+                    <div class="mb-2">
+                        <label>Profile Image</label>
+                        <input type="file" name="uploadfile" id="edit_uploadfile" class="form-control">
+                        <small class="text-muted">Leave empty to keep current image</small>
+                        <input type="hidden" name="old_image" id="old_image">
+                        <div id="current_image_preview" class="mt-2"></div>
+                    </div>
+
                 </div>
+
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-
                     <button type="submit" class="btn btn-primary">Update Student</button>
                 </div>
             </form>
@@ -107,291 +134,89 @@
     </div>
 </div>
 
-<!-- View Student Modal -->
-<div class="modal fade" id="studentViewModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">View Student</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body">
-
-                <div class="mb-3">
-
-                    <label for="">Name</label>
-                    <p id="view_name" class="form-control"></p>
-                </div>
-                <div class="mb-3">
-                    <label for="">Email</label>
-                    <p id="view_email" class="form-control"></p>
-                </div>
-                <div class="mb-3">
-                    <label for="">Phone</label>
-                    <p id="view_phone" class="form-control"></p>
-                </div>
-                <div class="mb-3">
-                    <label for="">Course</label>
-                    <p id="view_course" class="form-control"></p>
-                </div>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-            </div>
-        </div>
-    </div>
-</div>
-
+<!-- TABLE - FIXED TO BE INSIDE CARD -->
 <div class="container mt-4">
-    <div class="row">
-        <div class="col-md-12">
-            <div class="card">
-                <div class="card-header">
-                    <h4>
+    <div class="card">
+        <div class="card-header">
+            <h4 class="mb-0">Student Management</h4>
+            <button class="btn btn-primary float-end" data-bs-toggle="modal" data-bs-target="#studentAddModal" style="margin-top: -32px;">
+                Add Student
+            </button>
+        </div>
 
-                        <button type="button" class="btn btn-primary float-end" data-bs-toggle="modal"
-                            data-bs-target="#studentAddModal">
-                            Add Student
-                        </button>
-                    </h4>
-                </div>
-                <div class="card-body">
-
-                    <table id="myTable" class="table table-bordered table-striped table table-bordered'>">
-                        <thead>
-                            <tr>
-                                <th>ID</th>
-                                <th>First-Name</th>
-                                <th>Last-Name</th>
-                                <th>Email</th>
-                                <th>Password</th>
-                                <th>Address</th>
-                                <th>Phone-Number</th>
-                                <th>Gender</th>
-                                <th>Country</th>
-                                <th>Hobby</th>
-                                <th>Image</th>
-                                <th>Update</th>
-                                <th>Delete</th>
-                            </tr>
-                        </thead>
-                        <tbody >
-                            <?php
-                            require 'dbcon.php';
-
-                            $query = "SELECT * FROM students";
-                            $query_run = mysqli_query($con, $query);
-
-                            if(mysqli_num_rows($query_run) > 0)
-                            {
-                                foreach($query_run as $student)
-                                {
-                                    ?>
-                            <tr>
-                                <td><?= $student['id'] ?></td>
-                                <td><?= $student['firstName'] ?></td>
-                                <td><?= $student['lastName'] ?></td>
-                                <td><?= $student['email'] ?></td>
-                                <td><?= $student['password'] ?></td>
-                                <td><?= $student['addres'] ?></td>
-                                <td><?= $student['phoneNumber'] ?></td>
-                                <td><?= $student['gender'] ?></td>
-                                <td><?= $student['country'] ?></td>
-                                <td><?= $student['hobby'] ?></td>
-                           
-                                  <td><img src='upload/{$row['filenam']}' alt='NO IMAGE ' class='rounded' width='100' height='100' ></td>
-                                
-                                <td>
-                                    
-                                    <button type="button" value="<?=$student['id'];?>"
-                                        class="editStudentBtn btn btn-warning btn-sm">Edit</button></td>
-                                   <td> <button type="button" value="<?=$student['id'];?>"
-                                        class="deleteStudentBtn btn btn-danger btn-sm">Delete</button>
-                                </td>
-                            </tr>
-                            <?php
-                                }
-                            }
-                            ?>
-
-                        </tbody>
-                    </table>
-
-                </div>
-            </div>
+        <div class="card-body" style="max-height: 600px; overflow-y: auto;">
+            <table id="myTable" class="table table-bordered table-striped">
+                <thead style="position: sticky; top: 0; background-color: #fff; z-index: 10;">
+                    <tr>
+                        <th>ID</th>
+                        <th>First</th>
+                        <th>Last</th>
+                        <th>Email</th>
+                        <th>Password</th>
+                        <th>Address</th>
+                        <th>Phone</th>
+                        <th>Gender</th>
+                        <th>Country</th>
+                        <th>Hobby</th>
+                        <th>Image</th>
+                        <th>Edit</th>
+                        <th>Delete</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <?php
+                    require 'dbcon.php';
+                    $query = mysqli_query($con, "SELECT * FROM students");
+                    $student_count = mysqli_num_rows($query);
+                    
+                    if ($student_count > 0) {
+                        while ($student = mysqli_fetch_assoc($query)) {
+                    ?>
+                        <tr data-id="<?= $student['id'] ?>">
+                            <td><?= $student['id'] ?></td>
+                            <td class="firstName"><?= $student['firstName'] ?></td>
+                            <td class="lastName"><?= $student['lastName'] ?></td>
+                            <td class="email"><?= $student['email'] ?></td>
+                            <td class="password"><?= $student['password'] ?></td>
+                            <td class="addres"><?= $student['addres'] ?></td>
+                            <td class="phoneNumber"><?= $student['phoneNumber'] ?></td>
+                            <td class="gender"><?= $student['gender'] ?></td>
+                            <td class="country"><?= $student['country'] ?></td>
+                            <td class="hobby"><?= $student['hobby'] ?></td>
+                            <td class="image">
+                                <img src="upload/<?= $student['filenam'] ?>" width="80" class="student-image" data-filename="<?= $student['filenam'] ?>">
+                            </td>
+                            <td>
+                                <button class="btn btn-warning btn-sm editStudentBtn" value="<?= $student['id'] ?>">Edit</button>
+                            </td>
+                            <td>
+                                <button class="btn btn-danger btn-sm deleteStudentBtn" value="<?= $student['id'] ?>">Delete</button>
+                            </td>
+                        </tr>
+                    <?php 
+                        }
+                    } else {
+                    ?>
+                        <tr id="noDataRow">
+                            <td colspan="13" class="text-center text-muted py-4">
+                                <i class="fas fa-inbox fa-3x mb-3"></i>
+                                <h5>No Data Found</h5>
+                                <p>Click "Add Student" button to add your first student.</p>
+                            </td>
+                        </tr>
+                    <?php } ?>
+                </tbody>
+            </table>
         </div>
     </div>
 </div>
 
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
 
 <script src="//cdn.jsdelivr.net/npm/alertifyjs@1.13.1/build/alertify.min.js"></script>
-<script>
-$(document).on('submit', '#saveStudent', function(e) {
-    e.preventDefault();
 
-    var formData = new FormData(this);
-    formData.append("save_student", true);
-    $.ajax({
-        type: "POST",
-        url: "code.php",
-        data: new FormData( this ),
-        processData: false,
-        contentType: false,
-        success: function(response) {
+<script src="/PHP-Practicle/CRUD/Ajax_crud/crud.js">
 
-            var res = jQuery.parseJSON(response);
-            if (res.status == 422) {
-                $('#errorMessage').removeClass('d-none');
-                $('#errorMessage').text(res.message);
-            
-
-            } else if (res.status == 200) {
-
-                $('#errorMessage').addClass('d-none');
-                $('#studentAddModal').modal('hide');
-                $('#saveStudent')[0].reset();
-
-                alertify.set('notifier', 'position', 'top-right');
-                alertify.success(res.message);
-
-                $('#myTable').load(location.href + " #myTable");
-
-            } else if (res.status == 500) {
-                alert(res.message);
-            }
-        }
-    });
-
-});
-
-$(document).on('click', '.editStudentBtn', function() {
-    Ajax development services
-
-    var student_id = $(this).val();
-
-    $.ajax({
-        type: "GET",
-        url: "code.php?student_id=" + student_id,
-        success: function(response) {
-
-            var res = jQuery.parseJSON(response);
-            if (res.status == 404) {
-
-                alert(res.message);
-            } else if (res.status == 200) {
-
-                $('#student_id').val(res.data.id);
-                $('#name').val(res.data.name);
-                $('#email').val(res.data.email);
-                $('#phone').val(res.data.phone);
-                $('#course').val(res.data.course);
-
-                $('#studentEditModal').modal('show');
-            }
-
-        }
-    });
-
-});
-
-$(document).on('submit', '#updateStudent', function(e) {
-    e.preventDefault();
-
-    var formData = new FormData(this);
-    formData.append("update_student", true);
-
-    $.ajax({
-        type: "POST",
-        url: "code.php",
-        data: formData,
-        processData: false,
-        contentType: false,
-        success: function(response) {
-     
-            var res = jQuery.parseJSON(response);
-            if (res.status == 422) {
-                $('#errorMessageUpdate').removeClass('d-none');
-                $('#errorMessageUpdate').text(res.message);
-
-            } else if (res.status == 200) {
-
-                $('#errorMessageUpdate').addClass('d-none');
-
-                alertify.set('notifier', 'position', 'top-right');
-                alertify.success(res.message);
-
-                $('#studentEditModal').modal('hide');
-                $('#updateStudent')[0].reset();
-
-                $('#myTable').load(location.href + " #myTable");
-
-            } else if (res.status == 500) {
-                alert(res.message);
-            }
-            
-        }
-    });
-
-});
-
-$(document).on('click', '.viewStudentBtn', function() {
-
-    var student_id = $(this).val();
-    $.ajax({
-        type: "GET",
-        url: "code.php?student_id=" + student_id,
-        success: function(response) {
-
-            var res = jQuery.parseJSON(response);
-            if (res.status == 404) {
-
-                alert(res.message);
-            } else if (res.status == 200) {
-
-                $('#view_name').text(res.data.firstName);
-                $('#view_name').text(res.data.lastName);
-                $('#view_email').text(res.data.email);
-                $('#view_password').text(res.data.password);
-                $('#view_phoneNumber').text(res.data.phoneNumber);
-                $('#view_course').text(res.data.course);
-
-                $('#studentViewModal').modal('show');
-            }
-        }
-    });
-});
-
-$(document).on('click', '.deleteStudentBtn', function(e) {
-    e.preventDefault();
-
-    if (confirm('Are you sure you want to delete this data?')) {
-        var student_id = $(this).val();
-        $.ajax({
-            type: "POST",
-            url: "code.php",
-            data: {
-                'delete_student': true,
-                'student_id': student_id
-            },
-        
-            success: function(response) {
-
-                var res = jQuery.parseJSON(response);
-                if (res.status == 500) {
-
-                    alert(res.message);
-                } else {
-                    alertify.set('notifier', 'position', 'top-right');
-                    alertify.success(res.message);
-
-                    $('#myTable').load(location.href + " #myTable");
-                }
-            }
-        });
-    }
-});
 </script>
 
 <?php include(__DIR__ . '/../ADMIN/footer.php'); ?>

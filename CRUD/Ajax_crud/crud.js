@@ -1,11 +1,5 @@
-
-
-
-
-// Function to add new student row directly to table
-
 function addStudentRowToTable(student) {
-    // Remove "No data found" row if it exists
+  
     $('#noDataRow').remove();
     
     var newRow = '<tr data-id="' + student.id + '">' +
@@ -28,7 +22,7 @@ function addStudentRowToTable(student) {
     $('.card-body').animate({ scrollTop: 0 }, 300);
 }
 
-// Function to update student row in table
+
 function updateStudentRowInTable(student) {
     var row = $('tr[data-id="' + student.id + '"]');
     
@@ -41,21 +35,13 @@ function updateStudentRowInTable(student) {
     row.find('.gender').text(student.gender);
     row.find('.country').text(student.country);
     row.find('.hobby').text(student.hobby || '');
-    
-    // Update image if new one was uploaded
+  
     if (student.filenam) {
         row.find('.student-image').attr('src', 'upload/' + student.filenam + '?t=' + new Date().getTime());
         row.find('.student-image').attr('data-filename', student.filenam);
     }
-    
-    // Highlight the updated row
-    row.css('background-color', '#d4edda');
-    setTimeout(function() {
-        row.css('background-color', '');
-    }, 2000);
 }
 
-// Helper function to escape HTML to prevent XSS
 function escapeHtml(text) {
     if (text == null || text === undefined) {
         return '';
@@ -117,8 +103,7 @@ $('#studentAddModal').on('hidden.bs.modal', function () {
     $('#saveStudent')[0].reset();
     $('#saveStudent').find('.is-invalid').removeClass('is-invalid');
     $('#saveStudent').find('.is-valid').removeClass('is-valid');
-    $('#firstName-error').find('.invalid-feedback').removeClass('.invalid-feedback');
-
+    $('#saveStudent').find('.invalid-feedback').remove();
     
     $('#saveStudent input, #saveStudent select').removeClass('is-invalid is-valid');
     $('#errorMessage').addClass('d-none');
@@ -132,6 +117,7 @@ $('#studentEditModal').on('hidden.bs.modal', function () {
     $('body').css({'overflow': '', 'padding-right': ''});
     
     $('#updateStudent')[0].reset();
+     $('#updateStudent').find('.invalid-feedback').remove();
     $('#updateStudent input, #updateStudent select').removeClass('is-invalid is-valid');
     $('#errorMessageUpdate').addClass('d-none');
     touchedFields = {};

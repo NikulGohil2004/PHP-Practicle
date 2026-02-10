@@ -1,16 +1,21 @@
 <?php
-
+// Set JSON content type header
 header('Content-Type: application/json');
 
+// Enable error reporting for debugging (remove in production)
 error_reporting(E_ALL);
 ini_set('display_errors', 0);
 ini_set('log_errors', 1);
 
 require 'dbcon.php';
 
+// ============================================
+// DELETE STUDENT
+// ============================================
 if (isset($_POST['delete_student'])) {
     $student_id = mysqli_real_escape_string($con, $_POST['student_id']);
     
+    // First, get the image filename to delete it from the server
     $query = "SELECT filenam FROM students WHERE id='$student_id'";
     $query_run = mysqli_query($con, $query);
     
@@ -18,12 +23,12 @@ if (isset($_POST['delete_student'])) {
         $student = mysqli_fetch_array($query_run);
         $image_filename = $student['filenam'];
         
-        
+        // Delete the record from database
         $delete_query = "DELETE FROM students WHERE id='$student_id'";
         $delete_query_run = mysqli_query($con, $delete_query);
         
         if ($delete_query_run) {
-        
+            // Delete the image file from upload folder
             if (!empty($image_filename) && file_exists("upload/" . $image_filename)) {
                 unlink("upload/" . $image_filename);
             }
@@ -52,11 +57,13 @@ if (isset($_POST['delete_student'])) {
     }
 }
 
-
+// ============================================
+// UPDATE STUDENT
+// ============================================
 if (isset($_POST['update_student'])) {
     $student_id = mysqli_real_escape_string($con, $_POST['student_id']);
     
-
+    // Check if student exists
     $check_query = "SELECT * FROM students WHERE id='$student_id'";
     $check_result = mysqli_query($con, $check_query);
     
@@ -71,6 +78,7 @@ if (isset($_POST['update_student'])) {
     
     $existing_student = mysqli_fetch_array($check_result);
     
+    // Escape and sanitize input data
     $firstName   = mysqli_real_escape_string($con, trim($_POST['firstName'] ?? ''));
     $lastName    = mysqli_real_escape_string($con, trim($_POST['lastName'] ?? ''));
     $email       = mysqli_real_escape_string($con, trim($_POST['email'] ?? ''));
@@ -80,9 +88,11 @@ if (isset($_POST['update_student'])) {
     $gender      = mysqli_real_escape_string($con, $_POST['gender'] ?? '');
     $country     = mysqli_real_escape_string($con, $_POST['country'] ?? '');
     $hobbyArr    = $_POST['hobby'] ?? [];
-
+    
+    // Convert hobby array to string
     $hobby = is_array($hobbyArr) ? implode(', ', $hobbyArr) : '';
     
+    // Validate required fields
     if (empty($firstName) || empty($lastName) || empty($email) || empty($password) || 
         empty($addres) || empty($phoneNumber) || empty($gender) || empty($country)) {
         $res = [
@@ -93,8 +103,8 @@ if (isset($_POST['update_student'])) {
         exit;
     }
     
-
-    $filename = $existing_student['filenam'];
+    // Handle file upload (optional for update)
+    $filename = $existing_student['filenam']; // Keep old image by default
     
     if (isset($_FILES['uploadfile']) && $_FILES['uploadfile']['error'] == 0) {
         $file = $_FILES['uploadfile'];
@@ -116,7 +126,7 @@ if (isset($_POST['update_student'])) {
         $targetPath = $uploadDir . $new_filename;
         
         if (move_uploaded_file($file['tmp_name'], $targetPath)) {
-    
+            // Delete old image if it exists and is different from new one
             if (!empty($filename) && $filename != $new_filename && file_exists($uploadDir . $filename)) {
                 unlink($uploadDir . $filename);
             }
@@ -177,19 +187,21 @@ if (isset($_POST['update_student'])) {
     }
 }
 
-
+// ============================================
+// SAVE STUDENT
+// ============================================
 ob_start();
 
 try {
     if(isset($_POST['save_student']))
     {
-
+        // Check database connection
         if(!isset($con) || !$con) {
             $errorMsg = isset($db_error) ? $db_error : 'Database connection failed';
             throw new Exception($errorMsg);
         }
         
-       
+        // Escape and sanitize input data
         $firstName   = mysqli_real_escape_string($con, trim($_POST['firstName'] ?? ''));
         $lastName    = mysqli_real_escape_string($con, trim($_POST['lastName'] ?? ''));
         $email       = mysqli_real_escape_string($con, trim($_POST['email'] ?? ''));
@@ -200,18 +212,19 @@ try {
         $country     = mysqli_real_escape_string($con, $_POST['country'] ?? '');
         $hobbyArr    = $_POST['hobby'] ?? [];
         
-   
+        // Convert hobby array to string
         $hobby = is_array($hobbyArr) ? implode(', ', $hobbyArr) : '';
         
-       
+        // Handle file upload
         $filename = '';
         if(isset($_FILES['uploadfile']) && $_FILES['uploadfile']['error'] == 0) {
             $file = $_FILES['uploadfile'];
             $filename = mysqli_real_escape_string($con, basename($file['name']));
-          
+            
+            // Use absolute path or path relative to script location
             $uploadDir = __DIR__ . '/upload/';
             
-          
+            // Create upload directory if it doesn't exist
             if(!is_dir($uploadDir)) {
                 if(!mkdir($uploadDir, 0777, true)) {
                     throw new Exception('Failed to create upload directory');
@@ -220,7 +233,7 @@ try {
             
             $targetPath = $uploadDir . $filename;
             
-
+            // Move uploaded file
             if(!move_uploaded_file($file['tmp_name'], $targetPath)) {
                 $errorMsg = 'File upload failed';
                 $lastError = error_get_last();
@@ -255,10 +268,10 @@ try {
 
         if($query_run)
         {
-
+            // Get the inserted student ID
             $student_id = mysqli_insert_id($con);
             
-  
+            // Return the new student data
             $res = [
                 'status' => 200,
                 'message' => 'Student Created Successfully',
@@ -309,6 +322,9 @@ try {
     exit;
 }
 
+// ============================================
+// GET STUDENT BY ID
+// ============================================
 if(isset($_GET['student_id']))
 {
     $student_id = mysqli_real_escape_string($con, $_GET['student_id']);

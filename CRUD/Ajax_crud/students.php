@@ -15,7 +15,7 @@
                     <div id="errorMessage" class="alert alert-warning d-none"></div>
 
                     <div class="mb-2">
-                        <label>First Name <span class="text-danger"></span></label>
+                        <label>First Name <span class="text-danger"></span>*</label>
                         <input type="text" name="firstName" class="form-control" required>
                 
                     </div>

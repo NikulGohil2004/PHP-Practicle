@@ -1,3 +1,15 @@
+
+<?php
+session_start();
+ini_set('display_errors', 1);
+error_reporting(E_ALL);
+
+if (!isset($_SESSION['user_id'])) {
+    header('Location: ../Admin_crud/login_form.php');
+    exit(); 
+}
+?>
+
 <?php include(__DIR__ . '/../ADMIN/header.php'); ?>
 <?php include(__DIR__ . '/../ADMIN/sidebar.php'); ?>
 
@@ -16,7 +28,7 @@
 
                     <div class="mb-2">
                         <label>First Name <span class="text-danger"></span>*</label>
-                        <input type="text" name="firstName" class="form-control" required>
+                        <input type="text" name="firstName" class="form-control" required >
                 
                     </div>
 

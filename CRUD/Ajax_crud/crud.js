@@ -1,5 +1,7 @@
+
+
+
 function addStudentRowToTable(student) {
-  
     $('#noDataRow').remove();
     
     var newRow = '<tr data-id="' + student.id + '">' +
@@ -22,7 +24,6 @@ function addStudentRowToTable(student) {
     $('.card-body').animate({ scrollTop: 0 }, 300);
 }
 
-
 function updateStudentRowInTable(student) {
     var row = $('tr[data-id="' + student.id + '"]');
     
@@ -41,7 +42,6 @@ function updateStudentRowInTable(student) {
         row.find('.student-image').attr('data-filename', student.filenam);
     }
 }
-
 function escapeHtml(text) {
     if (text == null || text === undefined) {
         return '';
@@ -56,45 +56,243 @@ function escapeHtml(text) {
     return String(text).replace(/[&<>"']/g, function(m) { return map[m]; });
 }
 
-// Track touched fields
 var touchedFields = {};
 
-// Validate field on blur (after user touches and leaves)
-function validateField(field) {
-    var fieldName = field.name || field.getAttribute('name');
-    touchedFields[fieldName] = true;
+var validationRules = {
+    firstName: {
+        required: true,
+        pattern: /^[a-zA-Z\s]{2,50}$/,
+        message: 'First name must be 2-50 characters, letters only'
+    },
+    lastName: {
+         required: true,
+        pattern: /^[a-zA-Z\s]{2,50}$/,
+        message: 'Last name must be 2-50 characters, letters only'
+    },
+    email: {
+         required: true,
+        pattern: /^[^\s@]+@[^\s@]+\.[^\s@]+$/,
+        message: 'Please enter a valid email address'
+    },
+    password: {
+         required: true,
+        pattern: /^[a-zA-Z\s]{6,8}$/,
+        message: 'Password must be 6 to 8 characters only letter'
+    },
+    phoneNumber: {
+         required: true,
+        pattern: /^[0-9]{10}$/,
+        message: 'Phone number must be exactly 10 digits'
+    },
+    addres: {
+         required: true,
+        minLength: 10,
+        message: 'Address must be at least 10 characters'
+    }
+};
+
+
+
+
+function showError(field, message) {
+    field.classList.add('is-invalid');
+    field.classList.remove('is-valid');
     
-    if (field.type === 'file') {
-        var hasFile = field.files && field.files.length > 0;
-        if (!hasFile && field.hasAttribute('required')) {
-            field.classList.add('is-invalid');
-            field.classList.remove('is-valid');
-        } else if (hasFile) {
-            field.classList.remove('is-invalid');
-            field.classList.add('is-valid');
-        }
-    } else {
-        if (!field.checkValidity()) {
-            field.classList.add('is-invalid');
-            field.classList.remove('is-valid');
-        } else {
-            field.classList.remove('is-invalid');
-            field.classList.add('is-valid');
-        }
+
+    var existingError = field.parentElement.querySelector('.invalid-feedback');
+    if (existingError) {
+        existingError.remove();
+    }
+
+    var errorDiv = document.createElement('div');
+    errorDiv.className = 'invalid-feedback';
+    errorDiv.style.display = 'block';
+    errorDiv.textContent = message;
+    
+    field.parentElement.appendChild(errorDiv);
+}
+
+// Show success state for a field
+function showSuccess(field) {
+    field.classList.remove('is-invalid');
+    field.classList.add('is-valid');
+    
+    // Remove error message if any
+    var existingError = field.parentElement.querySelector('.invalid-feedback');
+    if (existingError) {
+        existingError.remove();
     }
 }
 
-// Add blur event to all form fields
-$(document).on('blur', '#saveStudent input[required]:not([type="file"]), #saveStudent select[required], #updateStudent input[required]:not([type="file"]), #updateStudent select[required]', function() {
+// Validate a single field
+function validateField(field) {
+    var fieldName = field.name || field.getAttribute('name');
+    var fieldValue = field.value.trim();
+    touchedFields[fieldName] = true;
+    
+    // Remove previous error message
+    var existingError = field.parentElement.querySelector('.invalid-feedback');
+    if (existingError) {
+        existingError.remove();
+    }
+    
+    // File validation
+    if (field.type === 'file') {
+        var hasFile = field.files && field.files.length > 0;
+        if (!hasFile && field.hasAttribute('required')) {
+            showError(field, 'Please select an image file');
+            return false;
+        } else if (hasFile) {
+            // Validate file type and size
+            var file = field.files[0];
+            var validTypes = ['image/jpeg', 'image/jpg', 'image/png', 'image/gif'];
+            var maxSize = 2 * 1024 * 1024; // 2MB
+            
+            if (!validTypes.includes(file.type)) {
+                showError(field, 'Only JPG, JPEG, PNG, and GIF files are allowed');
+                return false;
+            }
+            
+            if (file.size > maxSize) {
+                showError(field, 'File size must be less than 2MB');
+                return false;
+            }
+            
+            showSuccess(field);
+            return true;
+        }
+    }
+    
+    // Required field check
+    if (field.hasAttribute('required') && fieldValue === '') {
+        showError(field, 'This field is required');
+        return false;
+    }
+    
+    // Skip further validation if field is empty and not required
+    if (fieldValue === '') {
+        field.classList.remove('is-invalid', 'is-valid');
+        return true;
+    }
+    
+    // Custom validation rules
+    var cleanFieldName = fieldName.replace('edit_', '');
+    if (validationRules[cleanFieldName]) {
+        var rule = validationRules[cleanFieldName];
+        
+        // Pattern validation
+        if (rule.pattern && !rule.pattern.test(fieldValue)) {
+            showError(field, rule.message);
+            return false;
+        }
+        
+        // Min length validation
+        if (rule.minLength && fieldValue.length < rule.minLength) {
+            showError(field, rule.message);
+            return false;
+        }
+    }
+    
+
+    if (field.tagName === 'SELECT' && field.hasAttribute('required')) {
+        if (fieldValue === '' || fieldValue === null) {
+            showError(field, 'Please select an option');
+            return false;
+        }
+    }
+    
+    showSuccess(field);
+    return true;
+}
+
+
+function validateForm(formId) {
+    var form = document.getElementById(formId);
+    var isValid = true;
+   
+    var fields = form.querySelectorAll('input[type="text"], input[type="email"], input[type="password"], input[type="tel"], input[type="file"], select, textarea');
+    fields.forEach(function(field) {
+        touchedFields[field.name] = true;
+        if (!validateField(field)) {
+            isValid = false;
+        }
+    });
+    
+ 
+    var genderRadios = form.querySelectorAll('input[name="gender"], input[name="edit_gender"]');
+    if (genderRadios.length > 0) {
+        var genderChecked = Array.from(genderRadios).some(radio => radio.checked);
+        if (!genderChecked) {
+            isValid = false;
+            genderRadios.forEach(function(radio) {
+                showError(radio, 'Please select a gender');
+            });
+        }
+    }
+    
+
+    var hobbyCheckboxes = form.querySelectorAll('input[name="hobby[]"], input[name="edit_hobby[]"]');
+    if (hobbyCheckboxes.length > 0) {
+        var hobbyChecked = Array.from(hobbyCheckboxes).some(cb => cb.checked);
+        if (!hobbyChecked) {
+            isValid = false;
+            if (hobbyCheckboxes[0]) {
+                showError(hobbyCheckboxes[0], 'Please select at least one hobby');
+            }
+        }
+    }
+    
+    return isValid;
+}
+
+
+$(document).on('blur', '#saveStudent input, #saveStudent select, #saveStudent textarea, #updateStudent input, #updateStudent select, #updateStudent textarea', function() {
+    if (touchedFields[this.name] || this.value.trim() !== '') {
+        validateField(this);
+    }
+});
+
+
+$(document).on('input', '#saveStudent input:not([type="file"]):not([type="radio"]):not([type="checkbox"]), #updateStudent input:not([type="file"]):not([type="radio"]):not([type="checkbox"])', function() {
+    if (touchedFields[this.name]) {
+        validateField(this);
+    }
+});
+
+
+$(document).on('change', '#saveStudent input[type="file"], #updateStudent input[type="file"]', function() {
     validateField(this);
 });
 
-// File input validation on change
-$(document).on('change', '#saveStudent input[type="file"][required], #updateStudent input[type="file"]', function() {
+
+$(document).on('change', '#saveStudent select, #updateStudent select', function() {
     validateField(this);
 });
 
-// Reset form validation when modal is closed
+
+$(document).on('change', 'input[type="radio"][name="gender"], input[type="radio"][name="edit_gender"]', function() {
+    var radios = document.querySelectorAll('input[name="' + this.name + '"]');
+    radios.forEach(function(radio) {
+        radio.classList.remove('is-invalid');
+        var error = radio.parentElement.parentElement.querySelector('.invalid-feedback');
+        if (error) error.remove();
+    });
+});
+
+
+$(document).on('change', 'input[name="hobby[]"], input[name="edit_hobby[]"]', function() {
+    var form = this.closest('form');
+    var checkboxes = form.querySelectorAll('input[name="' + this.name + '"]');
+    var isChecked = Array.from(checkboxes).some(cb => cb.checked);
+    
+    checkboxes.forEach(function(checkbox) {
+        checkbox.classList.remove('is-invalid');
+        var error = checkbox.parentElement.parentElement.querySelector('.invalid-feedback');
+        if (error) error.remove();
+    });
+});
+
+
 $('#studentAddModal').on('hidden.bs.modal', function () {
     $('.modal-backdrop').remove();
     $('body').removeClass('modal-open');
@@ -111,68 +309,33 @@ $('#studentAddModal').on('hidden.bs.modal', function () {
     $('input[name="gender"][value="male"]').prop('checked', true);
 });
 
+
 $('#studentEditModal').on('hidden.bs.modal', function () {
     $('.modal-backdrop').remove();
     $('body').removeClass('modal-open');
     $('body').css({'overflow': '', 'padding-right': ''});
     
     $('#updateStudent')[0].reset();
-     $('#updateStudent').find('.invalid-feedback').remove();
+    $('#updateStudent').find('.invalid-feedback').remove();
     $('#updateStudent input, #updateStudent select').removeClass('is-invalid is-valid');
     $('#errorMessageUpdate').addClass('d-none');
+    $('#current_image_preview').html('');
     touchedFields = {};
 });
 
-// SAVE STUDENT
+
+
 $(document).on('submit', '#saveStudent', function(e) {
     e.preventDefault();
 
-    var form = this;
-    var isValid = true;
-    
-    $(form).find('input[required], select[required]').each(function() {
-        if (this.type === 'file') {
-            var hasFile = this.files && this.files.length > 0;
-            if (!hasFile) {
-                isValid = false;
-                if (touchedFields[this.name]) {
-                    $(this).addClass('is-invalid');
-                    $(this).removeClass('is-valid');
-                }
-            } else {
-                $(this).removeClass('is-invalid');
-                $(this).addClass('is-valid');
-            }
-        } else {
-            if (!this.checkValidity()) {
-                isValid = false;
-                if (touchedFields[this.name]) {
-                    $(this).addClass('is-invalid');
-                    $(this).removeClass('is-valid');
-                }
-            } else {
-                $(this).removeClass('is-invalid');
-                if (touchedFields[this.name]) {
-                    $(this).addClass('is-valid');
-                }
-            }
+ 
+    if (!validateForm('saveStudent')) {
+   
+        var firstError = $('#saveStudent .is-invalid')[0];
+        if (firstError) {
+            firstError.scrollIntoView({ behavior: 'smooth', block: 'center' });
+            firstError.focus();
         }
-    });
-    
-    if (!isValid) {
-        $(form).find('input[required], select[required]').each(function() {
-            if (!touchedFields[this.name]) {
-                touchedFields[this.name] = true;
-                if (this.type === 'file') {
-                    var hasFile = this.files && this.files.length > 0;
-                    if (!hasFile) {
-                        $(this).addClass('is-invalid');
-                    }
-                } else {
-                    validateField(this);
-                }
-            }
-        });
         return false;
     }
 
@@ -224,14 +387,14 @@ $(document).on('submit', '#saveStudent', function(e) {
     });
 });
 
-// EDIT STUDENT - LOAD DATA
+
+
 $(document).on('click', '.editStudentBtn', function(e) {
     e.preventDefault();
     
     var student_id = $(this).val();
     var row = $(this).closest('tr');
-    
-    // Get data from the row
+
     var firstName = row.find('.firstName').text();
     var lastName = row.find('.lastName').text();
     var email = row.find('.email').text();
@@ -243,7 +406,7 @@ $(document).on('click', '.editStudentBtn', function(e) {
     var hobby = row.find('.hobby').text();
     var imageFilename = row.find('.student-image').attr('data-filename');
     
-    // Fill the form
+
     $('#student_id').val(student_id);
     $('#edit_firstName').val(firstName);
     $('#edit_lastName').val(lastName);
@@ -254,29 +417,40 @@ $(document).on('click', '.editStudentBtn', function(e) {
     $('#edit_country').val(country);
     $('#old_image').val(imageFilename);
     
-    // Set gender radio
+
     if (gender === 'male') {
         $('#edit_gender_male').prop('checked', true);
     } else {
         $('#edit_gender_female').prop('checked', true);
     }
     
-    // Set hobby checkboxes
     $('#edit_hobby_carrom').prop('checked', hobby.includes('Carrom'));
     $('#edit_hobby_chess').prop('checked', hobby.includes('Chess'));
     
-    // Show current image
+   
     if (imageFilename) {
         $('#current_image_preview').html('<img src="upload/' + imageFilename + '" width="100" class="img-thumbnail"><br><small>Current Image</small>');
     }
     
-    // Show modal
+
     $('#studentEditModal').modal('show');
 });
 
-// UPDATE STUDENT
+
+
 $(document).on('submit', '#updateStudent', function(e) {
     e.preventDefault();
+
+
+    if (!validateForm('updateStudent')) {
+     
+        var firstError = $('#updateStudent .is-invalid')[0];
+        if (firstError) {
+            firstError.scrollIntoView({ behavior: 'smooth', block: 'center' });
+            firstError.focus();
+        }
+        return false;
+    }
 
     let formData = new FormData(this);
     formData.append("update_student", "1");
@@ -298,8 +472,7 @@ $(document).on('submit', '#updateStudent', function(e) {
                 $('#errorMessageUpdate').addClass('d-none');
                 alertify.success(res.message);
                 $('#studentEditModal').modal('hide');
-                
-                // Update the row directly without database call
+      
                 if (res.data) {
                     updateStudentRowInTable(res.data);
                 }
@@ -330,7 +503,8 @@ $(document).on('submit', '#updateStudent', function(e) {
     });
 });
 
-// DELETE STUDENT
+
+
 $(document).on('click', '.deleteStudentBtn', function(e) {
     e.preventDefault();
     
@@ -353,7 +527,7 @@ $(document).on('click', '.deleteStudentBtn', function(e) {
                     row.fadeOut(300, function() {
                         $(this).remove();
                         
-                        // Check if table is empty after deletion
+                     
                         if ($('#myTable tbody tr').length === 0) {
                             var noDataRow = '<tr id="noDataRow">' +
                                 '<td colspan="13" class="text-center text-muted py-4">' +
@@ -381,6 +555,3 @@ $(document).on('click', '.deleteStudentBtn', function(e) {
         });
     }
 });
-function closeModel(){
-
-}

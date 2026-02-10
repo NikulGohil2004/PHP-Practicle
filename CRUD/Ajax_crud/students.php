@@ -1,53 +1,87 @@
 <?php include(__DIR__ . '/../ADMIN/header.php'); ?>
 <?php include(__DIR__ . '/../ADMIN/sidebar.php'); ?>
 
-<!-- Add Student Modal -->
-<div class="modal fade" id="studentAddModal" tabindex="-1" aria-hidden="true">
-    <div class="modal-dialog modal-lg">
+<div class="modal fade" id="studentAddModal" tabindex="-1">
+    <div class="modal-dialog">
         <div class="modal-content">
-
             <div class="modal-header">
                 <h5 class="modal-title">Add Student</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                <button type="button"  class="btn-close" data-bs-dismiss="modal"></button>
             </div>
 
-            <form id="studentForm">
+            <form id="saveStudent" method="post" enctype="multipart/form-data">
                 <div class="modal-body">
 
-                    <div class="mb-3">
-                        <label>First Name</label>
-                        <input type="text" id="firstName" name="firstName" class="form-control">
-                        <span class="text-danger error" id="firstNameErr"></span>
+                    <div id="errorMessage" class="alert alert-warning d-none"></div>
+
+                    <div class="mb-2">
+                        <label>First Name <span class="text-danger"></span></label>
+                        <input type="text" name="firstName" class="form-control" required>
+                
                     </div>
 
-                    <div class="mb-3">
-                        <label>Last Name</label>
-                        <input type="text" id="lastName" name="lastName" class="form-control">
-                        <span class="text-danger error" id="lastNameErr"></span>
+                    <div class="mb-2">
+                        <label>Last Name <span class="text-danger">*</span></label>
+                        <input type="text" name="lastName" class="form-control" required>
                     </div>
 
-                    <div class="mb-3">
-                        <label>Email</label>
-                        <input type="email" id="email" name="email" class="form-control">
-                        <span class="text-danger error" id="emailErr"></span>
+                    <div class="mb-2">
+                        <label>Email <span class="text-danger">*</span></label>
+                        <input type="email" name="email" class="form-control" required pattern="[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}" title="Please enter a valid email address">
+                    </div>
+
+                    <div class="mb-2">
+                        <label>Password <span class="text-danger">*</span></label>
+                        <input type="password" name="password" class="form-control" required minlength="6" title="Password must be at least 6 characters">
+                    </div>
+
+                    <div class="mb-2">
+                        <label>Address <span class="text-danger">*</span></label>
+                        <input type="text" name="addres" class="form-control" required>
+                    </div>
+
+                    <div class="mb-2">
+                        <label>Phone Number <span class="text-danger">*</span></label>
+                        <input type="number" name="phoneNumber" class="form-control" required>
+                    </div>
+
+                    <div class="mb-2">
+                        <label>Gender <span class="text-danger">*</span></label><br>
+                        <input type="radio" name="gender" value="male" checked required> Male
+                        <input type="radio" name="gender" value="female" required> Female
+                    </div>
+
+                    <div class="mb-2">
+                        <label>Hobby</label><br>
+                        <input type="checkbox" name="hobby[]" value="Carrom"> Carrom
+                        <input type="checkbox" name="hobby[]" value="Chess"> Chess
+                    </div>
+
+                    <div class="mb-2">
+                        <label>Country <span class="text-danger">*</span></label>
+                        <select name="country" class="form-select" required>
+                            <option value="">Select</option>
+                            <option value="India">India</option>
+                            <option value="USA">USA</option>
+                        </select>
+                    </div>
+
+                    <div class="mb-2">
+                        <label>Profile Image <span class="text-danger">*</span></label>
+                        <input type="file" name="uploadfile" class="form-control" required>
                     </div>
 
                 </div>
 
                 <div class="modal-footer">
-                    <!-- IMPORTANT: type="button" -->
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
-                        Cancel
-                    </button>
-                    <button type="submit" class="btn btn-primary">
-                        Add Student
-                    </button>
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-primary">Save Student</button>
                 </div>
             </form>
-
         </div>
     </div>
 </div>
+
 <!-- EDIT STUDENT MODAL -->
 <div class="modal fade" id="studentEditModal" tabindex="-1">
     <div class="modal-dialog">

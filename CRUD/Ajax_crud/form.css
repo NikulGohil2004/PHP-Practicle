@@ -1,0 +1,8 @@
+/* Ensure the error message stays inline and matches the checkbox height */
+.form-check .invalid-feedback {
+    display: inline-block;
+    position: relative;
+    width: auto;
+    margin-left: 10px; /* Space between checkbox/label and error */
+    margin-top: 0;
+}

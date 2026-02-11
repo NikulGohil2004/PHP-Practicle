@@ -50,7 +50,7 @@ elseif (!empty($_SESSION['user_email']) && isset($con)) {
 
   <meta name="supported-color-schemes" content="light dark" />
   <link rel="preload" href="./css/adminlte.css" as="style" />
-
+  <link rel="stylesheet" href="/PHP-Practicle/CRUD/Ajax_crud/form.css"/>
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fontsource/source-sans-3@5.0.12/index.css"
     integrity="sha256-tXJfXfp6Ewt1ilPzLDtQnJV4hclT9XuaZUKyUvmyr+Q=" crossorigin="anonymous" media="print"
     onload="this.media='all'" />

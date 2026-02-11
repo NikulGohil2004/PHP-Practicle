@@ -6,5 +6,3 @@ if(!$con){
    
     $db_error = mysqli_connect_error();
 }
-
-?>

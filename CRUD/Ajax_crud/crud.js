@@ -1,6 +1,3 @@
-
-
-
 function addStudentRowToTable(student) {
     $('#noDataRow').remove();
     
@@ -19,7 +16,6 @@ function addStudentRowToTable(student) {
         '<td><button class="btn btn-warning btn-sm editStudentBtn" value="' + student.id + '">Edit</button></td>' +
         '<td><button class="btn btn-danger btn-sm deleteStudentBtn" value="' + student.id + '">Delete</button></td>' +
         '</tr>';
-    
     $('#myTable tbody').prepend(newRow);
     $('.card-body').animate({ scrollTop: 0 }, 300);
 }
@@ -42,22 +38,7 @@ function updateStudentRowInTable(student) {
         row.find('.student-image').attr('data-filename', student.filenam);
     }
 }
-function escapeHtml(text) {
-    if (text == null || text === undefined) {
-        return '';
-    }
-    var map = {
-        '&': '&amp;',
-        '<': '&lt;',
-        '>': '&gt;',
-        '"': '&quot;',
-        "'": '&#039;'
-    };
-    return String(text).replace(/[&<>"']/g, function(m) { return map[m]; });
-}
-
 var touchedFields = {};
-
 var validationRules = {
     firstName: {
         required: true,
@@ -75,9 +56,9 @@ var validationRules = {
         message: 'Please enter a valid email address'
     },
     password: {
-         required: true,
-        pattern: /^[a-zA-Z\s]{6,8}$/,
-        message: 'Password must be 6 to 8 characters only letter'
+        required: true,
+        pattern: /^[a-zA-Z0-9\s]{6,50}$/,
+        message: 'Password must be 6 to 50 characters only letter'
     },
     phoneNumber: {
          required: true,
@@ -90,15 +71,22 @@ var validationRules = {
         message: 'Address must be at least 10 characters'
     }
 };
-
-
-
-
+function escapeHtml(text) {
+    if (text == null || text === undefined) {
+        return '';
+    }
+    var map = {
+        '&': '&amp;',
+        '<': '&lt;',
+        '>': '&gt;',
+        '"': '&quot;',
+        "'": '&#039;'
+    };
+    return String(text).replace(/[&<>"']/g, function(m) { return map[m]; });
+}
 function showError(field, message) {
     field.classList.add('is-invalid');
     field.classList.remove('is-valid');
-    
-
     var existingError = field.parentElement.querySelector('.invalid-feedback');
     if (existingError) {
         existingError.remove();
@@ -111,31 +99,26 @@ function showError(field, message) {
     
     field.parentElement.appendChild(errorDiv);
 }
-
 // Show success state for a field
 function showSuccess(field) {
     field.classList.remove('is-invalid');
     field.classList.add('is-valid');
-    
     // Remove error message if any
     var existingError = field.parentElement.querySelector('.invalid-feedback');
     if (existingError) {
         existingError.remove();
     }
 }
-
 // Validate a single field
 function validateField(field) {
     var fieldName = field.name || field.getAttribute('name');
     var fieldValue = field.value.trim();
     touchedFields[fieldName] = true;
-    
     // Remove previous error message
     var existingError = field.parentElement.querySelector('.invalid-feedback');
     if (existingError) {
         existingError.remove();
     }
-    
     // File validation
     if (field.type === 'file') {
         var hasFile = field.files && field.files.length > 0;
@@ -152,60 +135,48 @@ function validateField(field) {
                 showError(field, 'Only JPG, JPEG, PNG, and GIF files are allowed');
                 return false;
             }
-            
             if (file.size > maxSize) {
                 showError(field, 'File size must be less than 2MB');
                 return false;
             }
-            
             showSuccess(field);
             return true;
         }
     }
-    
     // Required field check
     if (field.hasAttribute('required') && fieldValue === '') {
         showError(field, 'This field is required');
         return false;
     }
     
-    // Skip further validation if field is empty and not required
     if (fieldValue === '') {
         field.classList.remove('is-invalid', 'is-valid');
         return true;
     }
-    
     // Custom validation rules
     var cleanFieldName = fieldName.replace('edit_', '');
     if (validationRules[cleanFieldName]) {
         var rule = validationRules[cleanFieldName];
-        
         // Pattern validation
         if (rule.pattern && !rule.pattern.test(fieldValue)) {
             showError(field, rule.message);
             return false;
         }
-        
         // Min length validation
         if (rule.minLength && fieldValue.length < rule.minLength) {
             showError(field, rule.message);
             return false;
         }
     }
-    
-
     if (field.tagName === 'SELECT' && field.hasAttribute('required')) {
         if (fieldValue === '' || fieldValue === null) {
             showError(field, 'Please select an option');
             return false;
         }
     }
-    
     showSuccess(field);
     return true;
 }
-
-
 function validateForm(formId) {
     var form = document.getElementById(formId);
     var isValid = true;
@@ -217,8 +188,6 @@ function validateForm(formId) {
             isValid = false;
         }
     });
-    
- 
     var genderRadios = form.querySelectorAll('input[name="gender"], input[name="edit_gender"]');
     if (genderRadios.length > 0) {
         var genderChecked = Array.from(genderRadios).some(radio => radio.checked);
@@ -229,8 +198,6 @@ function validateForm(formId) {
             });
         }
     }
-    
-
     var hobbyCheckboxes = form.querySelectorAll('input[name="hobby[]"], input[name="edit_hobby[]"]');
     if (hobbyCheckboxes.length > 0) {
         var hobbyChecked = Array.from(hobbyCheckboxes).some(cb => cb.checked);
@@ -241,34 +208,24 @@ function validateForm(formId) {
             }
         }
     }
-    
     return isValid;
 }
-
-
 $(document).on('blur', '#saveStudent input, #saveStudent select, #saveStudent textarea, #updateStudent input, #updateStudent select, #updateStudent textarea', function() {
     if (touchedFields[this.name] || this.value.trim() !== '') {
         validateField(this);
     }
 });
-
-
 $(document).on('input', '#saveStudent input:not([type="file"]):not([type="radio"]):not([type="checkbox"]), #updateStudent input:not([type="file"]):not([type="radio"]):not([type="checkbox"])', function() {
     if (touchedFields[this.name]) {
         validateField(this);
     }
 });
-
-
 $(document).on('change', '#saveStudent input[type="file"], #updateStudent input[type="file"]', function() {
     validateField(this);
 });
-
-
 $(document).on('change', '#saveStudent select, #updateStudent select', function() {
     validateField(this);
 });
-
 
 $(document).on('change', 'input[type="radio"][name="gender"], input[type="radio"][name="edit_gender"]', function() {
     var radios = document.querySelectorAll('input[name="' + this.name + '"]');
@@ -279,19 +236,23 @@ $(document).on('change', 'input[type="radio"][name="gender"], input[type="radio"
     });
 });
 
+$(document).ready(function() {
+    // Select both create and edit checkbox groups
+    var $checkboxes = $('input[name="hobby[]"], input[name="edit_hobby[]"]');
 
-$(document).on('change', 'input[name="hobby[]"], input[name="edit_hobby[]"]', function() {
-    var form = this.closest('form');
-    var checkboxes = form.querySelectorAll('input[name="' + this.name + '"]');
-    var isChecked = Array.from(checkboxes).some(cb => cb.checked);
-    
-    checkboxes.forEach(function(checkbox) {
-        checkbox.classList.remove('is-invalid');
-        var error = checkbox.parentElement.parentElement.querySelector('.invalid-feedback');
-        if (error) error.remove();
+    $checkboxes.change(function() {
+        // Find checkboxes within the same group (by name)
+        var $group = $('input[name="' + $(this).attr('name') + '"]');
+        
+        // If at least one is checked, make them all NOT required
+        if ($group.is(':checked')) {
+            $group.removeAttr('required');
+        } else {
+            // Otherwise, make them all REQUIRED
+            $group.attr('required', 'required');
+        }
     });
 });
-
 
 $('#studentAddModal').on('hidden.bs.modal', function () {
     $('.modal-backdrop').remove();
@@ -309,7 +270,6 @@ $('#studentAddModal').on('hidden.bs.modal', function () {
     $('input[name="gender"][value="male"]').prop('checked', true);
 });
 
-
 $('#studentEditModal').on('hidden.bs.modal', function () {
     $('.modal-backdrop').remove();
     $('body').removeClass('modal-open');
@@ -323,14 +283,9 @@ $('#studentEditModal').on('hidden.bs.modal', function () {
     touchedFields = {};
 });
 
-
-
 $(document).on('submit', '#saveStudent', function(e) {
     e.preventDefault();
-
- 
     if (!validateForm('saveStudent')) {
-   
         var firstError = $('#saveStudent .is-invalid')[0];
         if (firstError) {
             firstError.scrollIntoView({ behavior: 'smooth', block: 'center' });
@@ -381,17 +336,13 @@ $(document).on('submit', '#saveStudent', function(e) {
             } catch(e) {
                 errorMsg = xhr.responseText || errorMsg;
             }
-            
             $('#errorMessage').removeClass('d-none').text(errorMsg);
         }
     });
 });
 
-
-
 $(document).on('click', '.editStudentBtn', function(e) {
     e.preventDefault();
-    
     var student_id = $(this).val();
     var row = $(this).closest('tr');
 
@@ -405,7 +356,6 @@ $(document).on('click', '.editStudentBtn', function(e) {
     var country = row.find('.country').text();
     var hobby = row.find('.hobby').text();
     var imageFilename = row.find('.student-image').attr('data-filename');
-    
 
     $('#student_id').val(student_id);
     $('#edit_firstName').val(firstName);
@@ -416,7 +366,6 @@ $(document).on('click', '.editStudentBtn', function(e) {
     $('#edit_phoneNumber').val(phoneNumber);
     $('#edit_country').val(country);
     $('#old_image').val(imageFilename);
-    
 
     if (gender === 'male') {
         $('#edit_gender_male').prop('checked', true);
@@ -426,22 +375,16 @@ $(document).on('click', '.editStudentBtn', function(e) {
     
     $('#edit_hobby_carrom').prop('checked', hobby.includes('Carrom'));
     $('#edit_hobby_chess').prop('checked', hobby.includes('Chess'));
-    
-   
+
     if (imageFilename) {
         $('#current_image_preview').html('<img src="upload/' + imageFilename + '" width="100" class="img-thumbnail"><br><small>Current Image</small>');
     }
-    
 
     $('#studentEditModal').modal('show');
 });
 
-
-
 $(document).on('submit', '#updateStudent', function(e) {
     e.preventDefault();
-
-
     if (!validateForm('updateStudent')) {
      
         var firstError = $('#updateStudent .is-invalid')[0];
@@ -497,61 +440,72 @@ $(document).on('submit', '#updateStudent', function(e) {
             } catch(e) {
                 errorMsg = xhr.responseText || errorMsg;
             }
-            
             $('#errorMessageUpdate').removeClass('d-none').text(errorMsg);
         }
     });
 });
-
-
-
+// DELETE STUDENT
 $(document).on('click', '.deleteStudentBtn', function(e) {
     e.preventDefault();
     
-    if (confirm('Are you sure you want to delete this student?')) {
-        var student_id = $(this).val();
-        var deleteBtn = $(this);
-        var row = deleteBtn.closest('tr');
-        
-        $.ajax({
-            type: "POST",
-            url: "code.php",
-            data: {
-                'delete_student': true,
-                'student_id': student_id
-            },
-            dataType: 'json',
-            success: function(response) {
-                if (response.status == 200) {
-                    alertify.success(response.message);
-                    row.fadeOut(300, function() {
-                        $(this).remove();
-                        
-                     
-                        if ($('#myTable tbody tr').length === 0) {
-                            var noDataRow = '<tr id="noDataRow">' +
-                                '<td colspan="13" class="text-center text-muted py-4">' +
-                                '<i class="fas fa-inbox fa-3x mb-3"></i>' +
-                                '<h5>No Data Found</h5>' +
-                                '<p>Click "Add Student" button to add your first student.</p>' +
-                                '</td>' +
-                                '</tr>';
-                            $('#myTable tbody').append(noDataRow);
-                        }
-                    });
-                } 
-                else if (response.status == 404) {
-                    alertify.error(response.message);
-                } 
-                else {
-                    alertify.error(response.message);
-                }
-            },
-            error: function(xhr, status, error) {
-                console.error('AJAX Error:', status, error);
-                console.error('Response:', xhr.responseText);
-                alertify.error('An error occurred while deleting. Please try again.');
+    var student_id = $(this).val();
+    var deleteBtn = $(this);
+    var row = deleteBtn.closest('tr');
+    
+    // Store the student_id in the modal's delete button
+    $('#confirmDeleteBtn').data('student-id', student_id);
+    $('#confirmDeleteBtn').data('row', row);
+    
+    // Show the modal
+    $('#deleteConfirmModal').modal('show');
+});
+// Handle the actual deletion when user confirms
+$(document).on('click', '#confirmDeleteBtn', function() {
+    var student_id = $(this).data('student-id');
+    var row = $(this).data('row');
+    
+    $.ajax({
+        type: "POST",
+        url: "code.php",
+        data: {
+            'delete_student': true,
+            'student_id': student_id
+        },
+        dataType: 'json',
+        success: function(response) {
+            if (response.status == 200) {
+                alertify.success(response.message);
+                $('#deleteConfirmModal').modal('hide');
+                
+                row.fadeOut(300, function() {
+                    $(this).remove();
+                    // Check if table is empty after deletion
+                    if ($('#myTable tbody tr').length === 0) {
+                        var noDataRow = '<tr id="noDataRow">' +
+                            '<td colspan="13" class="text-center text-muted py-4">' +
+                            '<i class="fas fa-inbox fa-3x mb-3"></i>' +
+                            '<h5>No Data Found</h5>' +
+                            '<p>Click "Add Student" button to add your first student.</p>' +
+                            '</td>' +
+                            '</tr>';
+                        $('#myTable tbody').append(noDataRow);
+                    }
+                });
+            } 
+            else if (response.status == 404) {
+                alertify.error(response.message);
+                $('#deleteConfirmModal').modal('hide');
+            } 
+            else {
+                alertify.error(response.message);
+                $('#deleteConfirmModal').modal('hide');
             }
-        });
-    }
+        },
+        error: function(xhr, status, error) {
+            console.error('AJAX Error:', status, error);
+            console.error('Response:', xhr.responseText);
+            alertify.error('An error occurred while deleting. Please try again.');
+            $('#deleteConfirmModal').modal('hide');
+        }
+    });
 });

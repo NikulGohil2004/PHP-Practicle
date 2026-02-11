@@ -1,4 +1,3 @@
-
 <?php
 session_start();
 ini_set('display_errors', 1);
@@ -18,7 +17,7 @@ if (!isset($_SESSION['user_id'])) {
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title">Add Student</h5>
-                <button type="button"  class="btn-close" data-bs-dismiss="modal"></button>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
             </div>
 
             <form id="saveStudent" method="post" enctype="multipart/form-data">
@@ -28,8 +27,8 @@ if (!isset($_SESSION['user_id'])) {
 
                     <div class="mb-2">
                         <label>First Name <span class="text-danger"></span>*</label>
-                        <input type="text" name="firstName" class="form-control" required >
-                
+                        <input type="text" name="firstName" class="form-control" required>
+
                     </div>
 
                     <div class="mb-2">
@@ -39,12 +38,15 @@ if (!isset($_SESSION['user_id'])) {
 
                     <div class="mb-2">
                         <label>Email <span class="text-danger">*</span></label>
-                        <input type="email" name="email" class="form-control" required pattern="[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}" title="Please enter a valid email address">
+                        <input type="email" name="email" class="form-control" required
+                            pattern="[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}"
+                            title="Please enter a valid email address">
                     </div>
 
                     <div class="mb-2">
                         <label>Password <span class="text-danger">*</span></label>
-                        <input type="password" name="password" class="form-control" required minlength="6" title="Password must be at least 6 characters">
+                        <input type="password" name="password" class="form-control" required minlength="6"
+                            title="Password must be at least 6 characters">
                     </div>
 
                     <div class="mb-2">
@@ -63,11 +65,12 @@ if (!isset($_SESSION['user_id'])) {
                         <input type="radio" name="gender" value="female" required> Female
                     </div>
 
-                    <div class="mb-2">
-                        <label>Hobby</label><br>
-                        <input type="checkbox" name="hobby[]" value="Carrom"> Carrom
-                        <input type="checkbox" name="hobby[]" value="Chess"> Chess
+                    <div class="form-check mb-2">
+                        <label>Hobby (Select at least one)</label><br>
+                        Carrom<input type="checkbox" name="hobby[]" value="Carrom" required>
+                      <br> Chess <input type="checkbox" name="hobby[]" value="Chess" required> 
                     </div>
+
 
                     <div class="mb-2">
                         <label>Country <span class="text-danger">*</span></label>
@@ -122,12 +125,15 @@ if (!isset($_SESSION['user_id'])) {
 
                     <div class="mb-2">
                         <label>Email <span class="text-danger">*</span></label>
-                        <input type="email" name="email" id="edit_email" class="form-control" required pattern="[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}" title="Please enter a valid email address">
+                        <input type="email" name="email" id="edit_email" class="form-control" required
+                            pattern="[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}"
+                            title="Please enter a valid email address">
                     </div>
 
                     <div class="mb-2">
                         <label>Password <span class="text-danger">*</span></label>
-                        <input type="password" name="password" id="edit_password" class="form-control" required minlength="6" title="Password must be at least 6 characters">
+                        <input type="password" name="password" id="edit_password" class="form-control" required
+                            minlength="6" title="Password must be at least 6 characters">
                     </div>
 
                     <div class="mb-2">
@@ -148,7 +154,7 @@ if (!isset($_SESSION['user_id'])) {
 
                     <div class="mb-2">
                         <label>Hobby</label><br>
-                        <input type="checkbox" name="hobby[]" id="edit_hobby_carrom" value="Carrom"> Carrom
+                        <input type="checkbox" name="hobby[]" id="edit_hobby_carrom" value="Carrom" required> Carrom
                         <input type="checkbox" name="hobby[]" id="edit_hobby_chess" value="Chess"> Chess
                     </div>
 
@@ -180,12 +186,32 @@ if (!isset($_SESSION['user_id'])) {
     </div>
 </div>
 
+<!-- DELETE CONFIRMATION MODAL -->
+<div class="modal fade" id="deleteConfirmModal" tabindex="-1">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header  text-white">
+                <h5 class="modal-title">Confirm Delete</h5>
+                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body">
+                <p>Are you sure you want to delete this student?</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                <button type="button" class="btn btn-secondary" id="confirmDeleteBtn">Delete</button>
+            </div>
+        </div>
+    </div>
+</div>
+
 <!-- TABLE - FIXED TO BE INSIDE CARD -->
 <div class="container mt-4">
     <div class="card">
         <div class="card-header">
             <h4 class="mb-0">Student Management</h4>
-            <button class="btn btn-primary float-end" data-bs-toggle="modal" data-bs-target="#studentAddModal" style="margin-top: -32px;">
+            <button class="btn btn-primary float-end" data-bs-toggle="modal" data-bs-target="#studentAddModal"
+                style="margin-top: -32px;">
                 Add Student
             </button>
         </div>
@@ -218,38 +244,41 @@ if (!isset($_SESSION['user_id'])) {
                     if ($student_count > 0) {
                         while ($student = mysqli_fetch_assoc($query)) {
                     ?>
-                        <tr data-id="<?= $student['id'] ?>">
-                            <td><?= $student['id'] ?></td>
-                            <td class="firstName"><?= $student['firstName'] ?></td>
-                            <td class="lastName"><?= $student['lastName'] ?></td>
-                            <td class="email"><?= $student['email'] ?></td>
-                            <td class="password"><?= $student['password'] ?></td>
-                            <td class="addres"><?= $student['addres'] ?></td>
-                            <td class="phoneNumber"><?= $student['phoneNumber'] ?></td>
-                            <td class="gender"><?= $student['gender'] ?></td>
-                            <td class="country"><?= $student['country'] ?></td>
-                            <td class="hobby"><?= $student['hobby'] ?></td>
-                            <td class="image">
-                                <img src="upload/<?= $student['filenam'] ?>" width="80" class="student-image" data-filename="<?= $student['filenam'] ?>">
-                            </td>
-                            <td>
-                                <button class="btn btn-warning btn-sm editStudentBtn" value="<?= $student['id'] ?>">Edit</button>
-                            </td>
-                            <td>
-                                <button class="btn btn-danger btn-sm deleteStudentBtn" value="<?= $student['id'] ?>">Delete</button>
-                            </td>
-                        </tr>
+                    <tr data-id="<?= $student['id'] ?>">
+                        <td><?= $student['id'] ?></td>
+                        <td class="firstName"><?= $student['firstName'] ?></td>
+                        <td class="lastName"><?= $student['lastName'] ?></td>
+                        <td class="email"><?= $student['email'] ?></td>
+                        <td class="password"><?= $student['password'] ?></td>
+                        <td class="addres"><?= $student['addres'] ?></td>
+                        <td class="phoneNumber"><?= $student['phoneNumber'] ?></td>
+                        <td class="gender"><?= $student['gender'] ?></td>
+                        <td class="country"><?= $student['country'] ?></td>
+                        <td class="hobby"><?= $student['hobby'] ?></td>
+                        <td class="image">
+                            <img src="upload/<?= $student['filenam'] ?>" width="80" class="student-image"
+                                data-filename="<?= $student['filenam'] ?>">
+                        </td>
+                        <td>
+                            <button class="btn btn-warning btn-sm editStudentBtn"
+                                value="<?= $student['id'] ?>">Edit</button>
+                        </td>
+                        <td>
+                            <button class="btn btn-danger btn-sm deleteStudentBtn"
+                                value="<?= $student['id'] ?>">Delete</button>
+                        </td>
+                    </tr>
                     <?php 
                         }
                     } else {
                     ?>
-                        <tr id="noDataRow">
-                            <td colspan="13" class="text-center text-muted py-4">
-                                <i class="fas fa-inbox fa-3x mb-3"></i>
-                                <h5>No Data Found</h5>
-                                <p>Click "Add Student" button to add your first student.</p>
-                            </td>
-                        </tr>
+                    <tr id="noDataRow">
+                        <td colspan="13" class="text-center text-muted py-4">
+                            <i class="fas fa-inbox fa-3x mb-3"></i>
+                            <h5>No Data Found</h5>
+                            <p>Click "Add Student" button to add your first student.</p>
+                        </td>
+                    </tr>
                     <?php } ?>
                 </tbody>
             </table>

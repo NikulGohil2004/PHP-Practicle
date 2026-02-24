@@ -1,0 +1,62 @@
+/* .container.mt-4 {
+  text-align: left;
+}
+
+
+   // $('#addModal').on('show.bs.modal', function () {
+    //     $(".error-msg").text("");
+    //     $("#submitform")[0].reset();
+    // });
+
+
+
+
+
+
+   // var valid = true;
+    // $(".error-msg").text(""); 
+
+    // var firstname = $("#FirstName").val().trim();
+    // if (firstname === "") {
+    //     $("#FirstName").siblings(".error-msg").first().text("First Name is Required.");
+    //     valid = false;
+    // }
+    // var lastname = $("#LastName").val().trim();
+    // if (lastname === "") {
+    //     $("#LastName").siblings(".error-msg").first().text("Last Name is Required.");
+    //     valid = false;
+    // }
+    // var Email = $("#Email").val().trim();
+    // if (Email === "") {
+    //     $("#Email").siblings(".error-msg").first().text("Email is Required.");
+    //     valid = false;
+    // }
+    // var Password = $("#Password").val().trim();
+    // if (Password === "") {
+    //     $("#Password").siblings(".error-msg").first().text("Password is Required.");
+    //     valid = false;
+    // }
+    // var ConfirmPassword = $("#Confirm-Password").val();
+    // if (ConfirmPassword === "") {
+    //     $("#Confirm-Password").siblings(".error-msg").first().text("ConfirmPassword is Required.");
+    //     valid = false;
+    // }
+    // var Language  = $("#Language").val();
+    // if (Language === "") {
+    //     $("#Language").siblings(".error-msg").first().text("Language  is Required.");
+    //     valid = false;
+    // }
+    
+    // if ($("#Maths").val() === null) {
+    //     $("#Maths").siblings(".error-msg").first().text("Subjects  is Required.");
+    //     valid = false;
+    // }
+    // if($("#Image").val()===""){
+    //      $("#Image").siblings(".error-msg").first().text("Image  is Required.");
+    //     valid = false;
+    // }
+     
+    // if (!valid) {
+    //     e.preventDefault(); 
+    //     return false;
+    // } */
